@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEPTA Regional Rail Tracker</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e8eaf0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 48px;
+    }
+
+    /* ── Header ── */
+    header { text-align: center; margin-bottom: 28px; }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .septa-badge {
+      background: #0057a8;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    h1 { font-size: 22px; font-weight: 700; color: #fff; }
+
+    .subtitle { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+    /* ── Station Picker ── */
+    .picker {
+      width: 100%;
+      max-width: 480px;
+      background: #1a1e2e;
+      border: 1px solid #252a3e;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .picker-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    .field select {
+      background: #0f1117;
+      border: 1px solid #2d3348;
+      color: #e8eaf0;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .field select:focus { border-color: #0057a8; }
+
+    .swap-btn {
+      background: #252a3e;
+      border: 1px solid #2d3348;
+      color: #8b92a8;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 18px;
+      transition: all 0.15s;
+    }
+
+    .swap-btn:hover { background: #0057a8; color: #fff; border-color: #0057a8; }
+
+    .search-btn {
+      width: 100%;
+      margin-top: 14px;
+      background: #0057a8;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .search-btn:hover { background: #0066cc; }
+    .search-btn:disabled { background: #1a2a40; color: #4b5268; cursor: default; }
+
+    /* ── Meta row ── */
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: #6b7280;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .refresh-btn {
+      background: none;
+      border: 1px solid #2d3348;
+      color: #8b92a8;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .refresh-btn:hover { background: #1e2235; color: #c0c6d8; }
+
+    .countdown { font-size: 12px; color: #4b5268; }
+
+    /* ── Cards ── */
+    .cards {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: #1a1e2e;
+      border: 1px solid #252a3e;
+      border-radius: 14px;
+      padding: 20px 22px;
+    }
+
+    .card.on-time   { border-left: 4px solid #22c55e; }
+    .card.delayed   { border-left: 4px solid #f59e0b; }
+    .card.very-late { border-left: 4px solid #ef4444; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .train-num { font-size: 13px; color: #6b7280; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    .status-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .status-badge.on-time   { background: #14532d; color: #4ade80; }
+    .status-badge.delayed   { background: #451a03; color: #fbbf24; }
+    .status-badge.very-late { background: #450a0a; color: #f87171; }
+
+    .times { display: flex; align-items: center; }
+
+    .time-block { flex: 1; }
+
+    .time-block + .time-block {
+      border-left: 1px solid #252a3e;
+      padding-left: 20px;
+      margin-left: 20px;
+    }
+
+    .time-label {
+      font-size: 11px;
+      color: #6b7280;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .time-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f0f2fa;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .time-value.struck {
+      font-size: 16px;
+      color: #4b5268;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+
+    .time-expected           { font-size: 22px; font-weight: 700; color: #f59e0b; letter-spacing: -0.5px; margin-top: 2px; }
+    .time-expected.very-late { color: #ef4444; }
+
+    .delay-note           { margin-top: 12px; font-size: 12px; color: #f59e0b; }
+    .delay-note.very-late { color: #ef4444; }
+
+    /* ── State boxes ── */
+    .state-box {
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #252a3e;
+      border-top-color: #0057a8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .state-icon { font-size: 36px; margin-bottom: 12px; }
+    .state-msg  { font-size: 15px; color: #8b92a8; }
+    .state-sub  { font-size: 12px; color: #4b5268; margin-top: 6px; }
+
+    footer {
+      margin-top: 36px;
+      font-size: 11px;
+      color: #3a3f55;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-row">
+    <span class="septa-badge">SEPTA</span>
+    <h1>Regional Rail Tracker</h1>
+  </div>
+  <div class="subtitle">Next 3 trains between any two stations</div>
+</header>
+
+<!-- Station Picker -->
+<div class="picker">
+  <div class="picker-row">
+    <div class="field">
+      <label for="fromStation">From</label>
+      <select id="fromStation"></select>
+    </div>
+    <button class="swap-btn" onclick="swapStations()" title="Swap stations">⇄</button>
+    <div class="field">
+      <label for="toStation">To</label>
+      <select id="toStation"></select>
+    </div>
+  </div>
+  <button class="search-btn" id="searchBtn" onclick="loadTrains()">Search Trains</button>
+</div>
+
+<!-- Meta row (hidden until first search) -->
+<div class="meta-row" id="metaRow" style="display:none">
+  <span id="lastUpdated">—</span>
+  <button class="refresh-btn" onclick="loadTrains()">↻ Refresh</button>
+  <span class="countdown" id="countdown"></span>
+</div>
+
+<div id="output">
+  <div class="state-box">
+    <div class="state-icon">🚉</div>
+    <div class="state-msg">Select stations above and press Search.</div>
+  </div>
+</div>
+
+<footer>Data from SEPTA NextToArrive API &nbsp;·&nbsp; Auto-refreshes every 60 s after first search</footer>
+
+<script>
+  /* ── Station list ─────────────────────────────── */
+  const STATIONS = [
+    "30th Street Station",
+    "Allen Lane",
+    "Ambler",
+    "Ardmore",
+    "Arlington",
+    "Bala",
+    "Berwyn",
+    "Bryn Mawr",
+    "Carpenter",
+    "Cheltenham",
+    "Chestnut Hill East",
+    "Chestnut Hill West",
+    "Conshohocken",
+    "Curtis Park",
+    "Cynwyd",
+    "Devon",
+    "Downingtown",
+    "Doylestown",
+    "Elkins Park",
+    "Exton",
+    "Fern Rock TC",
+    "Fernwood-Yeadon",
+    "Folcroft",
+    "Fort Washington",
+    "Fox Chase",
+    "Glenolden",
+    "Glenside",
+    "Gwynedd Valley",
+    "Hatboro",
+    "Haverford",
+    "Holmes",
+    "Ivy Ridge",
+    "Jefferson Station",
+    "Jenkintown-Wyncote",
+    "Langhorne",
+    "Lansdale",
+    "Lansdowne",
+    "Lawndale",
+    "Malvern",
+    "Marcus Hook",
+    "Meadowbrook",
+    "Media",
+    "Melrose Park",
+    "Merion",
+    "Moylan-Rose Valley",
+    "Mt Airy",
+    "Narberth",
+    "Noble",
+    "Norristown TC",
+    "North Hills",
+    "North Philadelphia",
+    "North Wales",
+    "Norwood",
+    "Oreland",
+    "Overbrook",
+    "Paoli",
+    "Penn Medicine Station",
+    "Penllyn",
+    "Pennbrook",
+    "Primos",
+    "Prospect Park",
+    "Providence Road",
+    "Radnor",
+    "Ridley Park",
+    "Rydal",
+    "Secane",
+    "Sharon Hill",
+    "Somerton",
+    "Springfield-Delco",
+    "St. Martins",
+    "Strafford",
+    "Suburban Station",
+    "Swarthmore",
+    "Temple University",
+    "Thorndale",
+    "Torresdale",
+    "University City",
+    "Upsal",
+    "Villanova",
+    "Wallingford",
+    "Warminster",
+    "Warwick",
+    "Wayne",
+    "Wayne Junction",
+    "West Trenton",
+    "Whitford",
+    "Wissahickon",
+    "Woodbourne",
+    "Wyndmoor",
+    "Wynnewood",
+    "Yardley",
+  ].sort();
+
+  const DEFAULT_FROM = "Jefferson Station";
+  const DEFAULT_TO   = "Rydal";
+
+  /* ── Build dropdowns ──────────────────────────── */
+  function buildSelects() {
+    const fromEl = document.getElementById("fromStation");
+    const toEl   = document.getElementById("toStation");
+
+    STATIONS.forEach(s => {
+      fromEl.appendChild(new Option(s, s, false, s === DEFAULT_FROM));
+      toEl.appendChild(new Option(s, s, false, s === DEFAULT_TO));
+    });
+  }
+
+  function swapStations() {
+    const f = document.getElementById("fromStation");
+    const t = document.getElementById("toStation");
+    const tmp = f.value;
+    f.value = t.value;
+    t.value = tmp;
+    if (lastSearched) loadTrains();
+  }
+
+  /* ── Proxy chain ──────────────────────────────── */
+  const PROXIES = [
+    url => url,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  ];
+
+  async function fetchJSON(apiUrl) {
+    let lastErr = new Error("All proxies failed");
+    for (const wrap of PROXIES) {
+      try {
+        const r = await fetch(wrap(apiUrl), { cache: "no-store" });
+        if (r.ok) return await r.json();
+        lastErr = new Error(`HTTP ${r.status}`);
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr;
+  }
+
+  /* ── Helpers ──────────────────────────────────── */
+  function parseDelay(s) {
+    if (!s) return 0;
+    const l = s.trim().toLowerCase();
+    if (l === "on time" || l === "" || l === "0") return 0;
+    const m = l.match(/(\d+)/);
+    return m ? parseInt(m[1], 10) : 0;
+  }
+
+  function addMinutes(timeStr, mins) {
+    if (!timeStr || !mins) return null;
+    const m = timeStr.replace(/\s/g, "").match(/^(\d+):(\d+)(AM|PM)$/i);
+    if (!m) return null;
+    let h = parseInt(m[1], 10), min = parseInt(m[2], 10);
+    const p = m[3].toUpperCase();
+    if (p === "PM" && h !== 12) h += 12;
+    if (p === "AM" && h === 12) h = 0;
+    const total = h * 60 + min + mins;
+    const nh = Math.floor(total / 60) % 24;
+    const nm = total % 60;
+    const np = nh >= 12 ? "PM" : "AM";
+    const dh = nh % 12 || 12;
+    return `${dh}:${String(nm).padStart(2, "0")} ${np}`;
+  }
+
+  function fmtTime(t) {
+    return t ? t.replace(/([AP]M)/i, " $1").replace(/\s+/g, " ").trim() : "—";
+  }
+
+  function cls(d) { return d === 0 ? "on-time" : d < 10 ? "delayed" : "very-late"; }
+
+  /* ── Render ───────────────────────────────────── */
+  function renderCards(trains, from, to) {
+    if (!trains || trains.length === 0) {
+      return `<div class="state-box">
+        <div class="state-icon">🚉</div>
+        <div class="state-msg">No upcoming trains found.</div>
+        <div class="state-sub">
+          No service between <strong>${from}</strong> and <strong>${to}</strong> right now,
+          or the station name may not match SEPTA's system exactly.
+        </div>
+      </div>`;
+    }
+    return `<div class="cards">${trains.map(renderCard).join("")}</div>`;
+  }
+
+  function renderCard(t) {
+    const delay  = parseDelay(t.orig_delay);
+    const c      = cls(delay);
+    const depSch = fmtTime(t.orig_departure_time);
+    const arrSch = fmtTime(t.orig_arrival_time);
+    const depExp = delay > 0 ? addMinutes(t.orig_departure_time, delay) : null;
+    const arrExp = delay > 0 ? addMinutes(t.orig_arrival_time,  delay) : null;
+
+    const badgeTxt = c === "on-time" ? "On Time" : `+${delay} min`;
+
+    const depHtml = depExp
+      ? `<div class="time-value struck">${depSch}</div><div class="time-expected ${c === "very-late" ? "very-late" : ""}">${depExp}</div>`
+      : `<div class="time-value">${depSch}</div>`;
+
+    const arrHtml = arrExp
+      ? `<div class="time-value struck">${arrSch}</div><div class="time-expected ${c === "very-late" ? "very-late" : ""}">${arrExp}</div>`
+      : `<div class="time-value">${arrSch}</div>`;
+
+    const delayNote = delay > 0
+      ? `<div class="delay-note ${c === "very-late" ? "very-late" : ""}">⚠ Running ${delay} minute${delay !== 1 ? "s" : ""} late</div>`
+      : "";
+
+    return `
+      <div class="card ${c}">
+        <div class="card-top">
+          <span class="train-num">Train #${t.orig_train || "—"}</span>
+          <span class="status-badge ${c}">${badgeTxt}</span>
+        </div>
+        <div class="times">
+          <div class="time-block">
+            <div class="time-label">Departs</div>${depHtml}
+          </div>
+          <div class="time-block">
+            <div class="time-label">Arrives</div>${arrHtml}
+          </div>
+        </div>
+        ${delayNote}
+      </div>`;
+  }
+
+  /* ── Data fetch & refresh ─────────────────────── */
+  let countdownTimer = null;
+  let secondsLeft    = 60;
+  let lastSearched   = false;
+
+  function buildApiUrl(from, to) {
+    return "https://www3.septa.org/api/NextToArrive/index.php" +
+      `?req1=${encodeURIComponent(from)}&req2=${encodeURIComponent(to)}&req3=3`;
+  }
+
+  async function loadTrains() {
+    const from = document.getElementById("fromStation").value;
+    const to   = document.getElementById("toStation").value;
+
+    if (from === to) {
+      document.getElementById("output").innerHTML = `<div class="state-box">
+        <div class="state-icon">⚠️</div>
+        <div class="state-msg">Origin and destination can't be the same.</div>
+      </div>`;
+      return;
+    }
+
+    lastSearched = true;
+    resetCountdown();
+    document.getElementById("metaRow").style.display = "flex";
+    document.getElementById("output").innerHTML = `
+      <div class="state-box">
+        <div class="spinner"></div>
+        <div>Looking up trains from <strong>${from}</strong> to <strong>${to}</strong>…</div>
+      </div>`;
+
+    try {
+      const data = await fetchJSON(buildApiUrl(from, to));
+      document.getElementById("output").innerHTML = renderCards(data, from, to);
+      document.getElementById("lastUpdated").textContent =
+        "Updated " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    } catch (err) {
+      document.getElementById("output").innerHTML = `<div class="state-box">
+        <div class="state-icon">⚠️</div>
+        <div class="state-msg">Could not load train data.</div>
+        <div class="state-sub">${err.message}</div>
+      </div>`;
+      document.getElementById("lastUpdated").textContent = "Failed to update";
+    }
+  }
+
+  function resetCountdown() {
+    clearInterval(countdownTimer);
+    secondsLeft = 60;
+    tick();
+    countdownTimer = setInterval(() => {
+      secondsLeft--;
+      tick();
+      if (secondsLeft <= 0) loadTrains();
+    }, 1000);
+  }
+
+  function tick() {
+    document.getElementById("countdown").textContent =
+      lastSearched && secondsLeft > 0 ? `next refresh in ${secondsLeft}s` : "";
+  }
+
+  /* ── Init ─────────────────────────────────────── */
+  buildSelects();
+</script>
+
+</body>
+</html>
