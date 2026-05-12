@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEPTA WTR — Jefferson to Rydal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e8eaf0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .septa-badge {
+      background: #0057a8;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .route-line {
+      font-size: 13px;
+      color: #8b92a8;
+      margin-top: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .refresh-btn {
+      background: none;
+      border: 1px solid #2d3348;
+      color: #8b92a8;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .refresh-btn:hover {
+      background: #1e2235;
+      color: #c0c6d8;
+    }
+
+    .countdown {
+      font-size: 12px;
+      color: #4b5268;
+    }
+
+    .cards {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: #1a1e2e;
+      border: 1px solid #252a3e;
+      border-radius: 14px;
+      padding: 20px 22px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .card.on-time  { border-left: 4px solid #22c55e; }
+    .card.delayed  { border-left: 4px solid #f59e0b; }
+    .card.very-late { border-left: 4px solid #ef4444; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .train-num {
+      font-size: 13px;
+      color: #6b7280;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .status-badge.on-time  { background: #14532d; color: #4ade80; }
+    .status-badge.delayed  { background: #451a03; color: #fbbf24; }
+    .status-badge.very-late { background: #450a0a; color: #f87171; }
+
+    .times {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+
+    .time-block {
+      flex: 1;
+    }
+
+    .time-block + .time-block {
+      border-left: 1px solid #252a3e;
+      padding-left: 20px;
+      margin-left: 20px;
+    }
+
+    .time-label {
+      font-size: 11px;
+      color: #6b7280;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .time-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f0f2fa;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .time-value.strikethrough {
+      font-size: 16px;
+      color: #4b5268;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+
+    .time-expected {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f59e0b;
+      letter-spacing: -0.5px;
+      margin-top: 2px;
+    }
+
+    .time-expected.very-late { color: #ef4444; }
+
+    .delay-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .delay-note.very-late { color: #ef4444; }
+
+    /* Loading & Error */
+    .state-box {
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #252a3e;
+      border-top-color: #0057a8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-icon { font-size: 36px; margin-bottom: 12px; }
+    .error-msg  { font-size: 15px; color: #8b92a8; }
+    .error-sub  { font-size: 12px; color: #4b5268; margin-top: 6px; }
+
+    footer {
+      margin-top: 32px;
+      font-size: 11px;
+      color: #3a3f55;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-row">
+    <span class="septa-badge">SEPTA</span>
+    <h1>West Trenton Line</h1>
+  </div>
+  <div class="route-line">Jefferson Station &rarr; Rydal</div>
+</header>
+
+<div class="meta-row">
+  <span id="lastUpdated">—</span>
+  <button class="refresh-btn" onclick="loadTrains()">↻ Refresh</button>
+  <span class="countdown" id="countdown"></span>
+</div>
+
+<div id="output">
+  <div class="state-box">
+    <div class="spinner"></div>
+    <div>Loading train data…</div>
+  </div>
+</div>
+
+<footer>Data from SEPTA NextToArrive API &nbsp;·&nbsp; Auto-refreshes every 60 s</footer>
+
+<script>
+  const SEPTA_API =
+    "https://www3.septa.org/api/NextToArrive/index.php" +
+    "?req1=Jefferson+Station&req2=Rydal&req3=3";
+
+  // Proxy wrappers — tried in order until one succeeds
+  const PROXIES = [
+    url => url,                                                                     // direct
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,        // allorigins
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,                     // corsproxy
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,   // codetabs
+  ];
+
+  async function fetchJSON() {
+    let lastErr = new Error("All proxies failed");
+    for (const wrap of PROXIES) {
+      try {
+        const r = await fetch(wrap(SEPTA_API), { cache: "no-store" });
+        if (r.ok) return await r.json();
+        lastErr = new Error(`HTTP ${r.status}`);
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    throw lastErr;
+  }
+
+  let countdownTimer = null;
+  let secondsLeft    = 60;
+
+  /* ── helpers ─────────────────────────────────── */
+
+  function parseDelay(delayStr) {
+    if (!delayStr) return 0;
+    const s = delayStr.trim().toLowerCase();
+    if (s === "on time" || s === "" || s === "0") return 0;
+    const m = s.match(/(\d+)/);
+    return m ? parseInt(m[1], 10) : 0;
+  }
+
+  function addMinutes(timeStr, mins) {
+    if (!timeStr || mins === 0) return null;
+    // handles "5:14PM" or "5:14 PM"
+    const m = timeStr.replace(/\s/g, "").match(/^(\d+):(\d+)(AM|PM)$/i);
+    if (!m) return null;
+    let h = parseInt(m[1], 10);
+    let min = parseInt(m[2], 10);
+    const period = m[3].toUpperCase();
+
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+
+    let total = h * 60 + min + mins;
+    let nh = Math.floor(total / 60) % 24;
+    let nm = total % 60;
+    const np = nh >= 12 ? "PM" : "AM";
+    let dh = nh % 12 || 12;
+    return `${dh}:${String(nm).padStart(2, "0")} ${np}`;
+  }
+
+  function fmtTime(t) {
+    // normalise "5:14PM" → "5:14 PM"
+    if (!t) return "—";
+    return t.replace(/([AP]M)/i, " $1").replace(/\s+/g, " ").trim();
+  }
+
+  function statusClass(delayMins) {
+    if (delayMins === 0) return "on-time";
+    if (delayMins < 10)  return "delayed";
+    return "very-late";
+  }
+
+  /* ── render ───────────────────────────────────── */
+
+  function renderCards(trains) {
+    if (!trains || trains.length === 0) {
+      return `<div class="state-box">
+        <div class="error-icon">🚉</div>
+        <div class="error-msg">No upcoming trains found.</div>
+        <div class="error-sub">Service may have ended for the day.</div>
+      </div>`;
+    }
+
+    return `<div class="cards">${trains.map(renderCard).join("")}</div>`;
+  }
+
+  function renderCard(t, idx) {
+    const delayMins  = parseDelay(t.orig_delay);
+    const cls        = statusClass(delayMins);
+    const depSched   = fmtTime(t.orig_departure_time);
+    const arrSched   = fmtTime(t.orig_arrival_time);
+    const depExpected = delayMins > 0 ? addMinutes(t.orig_departure_time, delayMins) : null;
+    const arrExpected = delayMins > 0 ? addMinutes(t.orig_arrival_time,   delayMins) : null;
+    const trainNum   = t.orig_train || "—";
+
+    const badgeLabel =
+      cls === "on-time"  ? "On Time" :
+      cls === "delayed"  ? `+${delayMins} min` :
+                           `+${delayMins} min`;
+
+    const depBlock = depExpected
+      ? `<div class="time-value strikethrough">${depSched}</div>
+         <div class="time-expected ${cls === "very-late" ? "very-late" : ""}">${depExpected}</div>`
+      : `<div class="time-value">${depSched}</div>`;
+
+    const arrBlock = arrExpected
+      ? `<div class="time-value strikethrough">${arrSched}</div>
+         <div class="time-expected ${cls === "very-late" ? "very-late" : ""}">${arrExpected}</div>`
+      : `<div class="time-value">${arrSched}</div>`;
+
+    const delayNote = delayMins > 0
+      ? `<div class="delay-note ${cls === "very-late" ? "very-late" : ""}">
+           ⚠ Running ${delayMins} minute${delayMins !== 1 ? "s" : ""} late
+         </div>`
+      : "";
+
+    return `
+      <div class="card ${cls}">
+        <div class="card-top">
+          <span class="train-num">Train #${trainNum}</span>
+          <span class="status-badge ${cls}">${badgeLabel}</span>
+        </div>
+        <div class="times">
+          <div class="time-block">
+            <div class="time-label">Departs</div>
+            ${depBlock}
+          </div>
+          <div class="time-block">
+            <div class="time-label">Arrives</div>
+            ${arrBlock}
+          </div>
+        </div>
+        ${delayNote}
+      </div>`;
+  }
+
+  /* ── data fetch ───────────────────────────────── */
+
+  async function loadTrains() {
+    resetCountdown();
+    document.getElementById("output").innerHTML = `
+      <div class="state-box">
+        <div class="spinner"></div>
+        <div>Fetching live train data…</div>
+      </div>`;
+
+    try {
+      const data = await fetchJSON();
+
+      document.getElementById("output").innerHTML = renderCards(data);
+      document.getElementById("lastUpdated").textContent =
+        "Updated " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    } catch (err) {
+      document.getElementById("output").innerHTML = `
+        <div class="state-box">
+          <div class="error-icon">⚠️</div>
+          <div class="error-msg">Could not load train data.</div>
+          <div class="error-sub">${err.message}<br>Check your internet connection and try again.</div>
+        </div>`;
+      document.getElementById("lastUpdated").textContent = "Failed to update";
+    }
+  }
+
+  /* ── auto-refresh countdown ───────────────────── */
+
+  function resetCountdown() {
+    clearInterval(countdownTimer);
+    secondsLeft = 60;
+    updateCountdownLabel();
+    countdownTimer = setInterval(() => {
+      secondsLeft--;
+      updateCountdownLabel();
+      if (secondsLeft <= 0) loadTrains();
+    }, 1000);
+  }
+
+  function updateCountdownLabel() {
+    document.getElementById("countdown").textContent =
+      secondsLeft > 0 ? `next refresh in ${secondsLeft}s` : "";
+  }
+
+  /* ── init ─────────────────────────────────────── */
+  loadTrains();
+</script>
+
+</body>
+</html>
