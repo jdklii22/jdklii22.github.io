@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Leadership ATS Guide — John Yam</title>
+  <meta name="description" content="Comprehensive ATS optimization guide for physician executive and healthcare leadership roles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg-2: #f1f5f9;
+      --surface: #ffffff;
+      --surface-hover: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --teal: #0f766e;
+      --teal-light: #0d9488;
+      --teal-dark: #115e59;
+      --emerald: #059669;
+      --emerald-light: #10b981;
+      --cyan: #0284c7;
+      --sapphire: #2563eb;
+      --purple: #7c3aed;
+      --rose: #e11d48;
+      --amber: #d97706;
+      --gold: #b45309;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --success-bg: #ecfdf5;
+      --warning-bg: #fffbeb;
+      --danger-bg: #fef2f2;
+      --info-bg: #f0fdfa;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 15px; min-height: 100vh; }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #059669 100%); color: #ffffff; position: relative; overflow: hidden; padding: 72px 32px 64px; text-align: center; }
+    .hero::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%); pointer-events: none; }
+    .hero-icon { display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); font-size: 28px; margin-bottom: 20px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #ffffff; margin-bottom: 16px; position: relative; z-index: 1; font-weight: 600; }
+    .hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px; position: relative; z-index: 1; color: #ffffff; }
+    .hero-sub { font-size: 15px; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 28px; position: relative; z-index: 1; }
+    .hero-stats { display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .hero-stat { text-align: center; }
+    .hero-stat-value { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1; }
+    .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* NAV */
+    .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 32px; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 10px 0; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-link { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--text-secondary); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+    .nav-link:hover, .nav-link.active { background: #ccfbf1; color: var(--teal); }
+    .nav-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; margin: 0 4px; }
+
+    /* LAYOUT */
+    .wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+    .section-title .icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: #ccfbf1; border: 1px solid #99f6e4; font-size: 17px; flex-shrink: 0; }
+    .section-desc { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+    .section-block { margin-bottom: 52px; }
+
+    /* CARDS */
+    .glass-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow-sm); transition: border-color 0.25s, box-shadow 0.25s; }
+    .glass-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+    .glass-card + .glass-card { margin-top: 16px; }
+
+    /* KEYWORD TIERS */
+    .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .tier-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.25s; }
+    .tier-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .tier-card.t1::before { background: linear-gradient(90deg, var(--teal), var(--emerald)); }
+    .tier-card.t2::before { background: linear-gradient(90deg, var(--sapphire), var(--purple)); }
+    .tier-card.t3::before { background: linear-gradient(90deg, var(--amber), var(--gold)); }
+    .tier-card.t4::before { background: linear-gradient(90deg, var(--cyan), var(--sapphire)); }
+    .tier-card.t5::before { background: linear-gradient(90deg, var(--rose), var(--purple)); }
+    .tier-card.t6::before { background: linear-gradient(90deg, var(--emerald), var(--cyan)); }
+    .tier-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .tier-label { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; padding: 3px 10px; border-radius: 999px; }
+    .t1 .tier-label { background: #ccfbf1; color: #0f766e; }
+    .t2 .tier-label { background: #dbeafe; color: #1e40af; }
+    .t3 .tier-label { background: #fef3c7; color: #92400e; }
+    .t4 .tier-label { background: #e0f2fe; color: #0369a1; }
+    .t5 .tier-label { background: #ffe4e6; color: #be123c; }
+    .t6 .tier-label { background: #d1fae5; color: #065f46; }
+    .tier-heading { font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 14px; }
+    .keyword-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .kw { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; user-select: all; }
+    .kw:hover { transform: scale(1.04); opacity: 0.9; }
+    .t1 .kw { background: #ccfbf1; border: 1px solid #99f6e4; color: #0f766e; }
+    .t2 .kw { background: #dbeafe; border: 1px solid #bfdbfe; color: #1e40af; }
+    .t3 .kw { background: #fef3c7; border: 1px solid #fde68a; color: #92400e; }
+    .t4 .kw { background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; }
+    .t5 .kw { background: #ffe4e6; border: 1px solid #fecdd3; color: #be123c; }
+    .t6 .kw { background: #d1fae5; border: 1px solid #a7f3d0; color: #065f46; }
+
+    /* ALERTS */
+    .alert { display: flex; gap: 14px; padding: 16px 20px; border-radius: var(--radius-sm); margin-bottom: 16px; border: 1px solid; }
+    .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .alert-body { flex: 1; }
+    .alert-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+    .alert-text { font-size: 13px; line-height: 1.6; }
+    .alert.success { background: var(--success-bg); border-color: #a7f3d0; }
+    .alert.success .alert-title { color: #065f46; }
+    .alert.success .alert-text { color: #047857; }
+    .alert.warning { background: var(--warning-bg); border-color: #fde68a; }
+    .alert.warning .alert-title { color: #92400e; }
+    .alert.warning .alert-text { color: #b45309; }
+    .alert.danger { background: var(--danger-bg); border-color: #fecdd3; }
+    .alert.danger .alert-title { color: #991b1b; }
+    .alert.danger .alert-text { color: #b91c1c; }
+    .alert.info { background: var(--info-bg); border-color: #99f6e4; }
+    .alert.info .alert-title { color: #0f766e; }
+    .alert.info .alert-text { color: #0d9488; }
+
+    /* ROLE CARDS */
+    .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: all 0.25s; }
+    .role-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+    .role-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+    .role-title { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); }
+    .role-org { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+    .role-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
+    .badge-exec { background: #ccfbf1; border: 1px solid #99f6e4; color: #0f766e; }
+    .badge-clinical { background: #d1fae5; border: 1px solid #a7f3d0; color: #065f46; }
+    .badge-admin { background: #dbeafe; border: 1px solid #bfdbfe; color: #1e40af; }
+    .badge-safety { background: #fef3c7; border: 1px solid #fde68a; color: #92400e; }
+
+    /* BULLET BUILDER */
+    .bullet-framework { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 20px; margin-top: 16px; }
+    .bullet-framework-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--teal); margin-bottom: 12px; }
+    .bullet-row { margin-bottom: 14px; }
+    .bullet-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+    .bullet-example { font-size: 13px; color: #1e293b; background: #f1f5f9; border-radius: var(--radius-xs); padding: 10px 14px; border-left: 3px solid var(--teal); font-style: italic; }
+
+    /* SUMMARY CARDS */
+    .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; box-shadow: var(--shadow-sm); transition: all 0.25s; }
+    .summary-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+    .summary-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+    .summary-label { font-size: 14px; font-weight: 700; color: var(--teal); }
+    .summary-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .tag-exec { background: #ccfbf1; color: #0f766e; }
+    .tag-quality { background: #d1fae5; color: #065f46; }
+    .tag-lead { background: #dbeafe; color: #1e40af; }
+    .tag-acad { background: #f3e8ff; color: #6b21a8; }
+    .summary-text { font-size: 13.5px; line-height: 1.75; color: #334155; font-style: italic; padding: 16px; background: #f8fafc; border-radius: var(--radius-xs); border-left: 3px solid var(--teal); }
+
+    /* CHECKLIST */
+    .checklist { list-style: none; }
+    .checklist li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: var(--text-primary); }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+
+    /* TABLE */
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th { text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-secondary); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .compare-table td { font-size: 13px; padding: 11px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; color: #1e293b; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:hover td { background: #f8fafc; }
+    .col-avoid { color: #dc2626; font-weight: 500; }
+    .col-use { color: var(--teal); font-weight: 600; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(to bottom, var(--teal), var(--emerald)); }
+    .timeline-item { position: relative; margin-bottom: 26px; }
+    .timeline-dot { position: absolute; left: -26px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); border: 2px solid #ffffff; box-shadow: 0 0 0 2px var(--teal); }
+    .timeline-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--teal); margin-bottom: 3px; }
+    .timeline-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .timeline-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* SCORE METER */
+    .score-bar-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .score-label { font-size: 13px; font-weight: 600; min-width: 200px; color: var(--text-primary); }
+    .score-bar-bg { flex: 1; height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--emerald)); transition: width 0.8s ease; }
+    .score-pct { font-size: 13px; font-weight: 700; color: var(--teal); min-width: 36px; text-align: right; }
+
+    /* GRID */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* VERBS */
+    .verb-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .verb { padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; background: #f0fdfa; border: 1px solid #99f6e4; color: var(--teal); transition: all 0.2s; }
+    .verb:hover { background: #ccfbf1; transform: scale(1.05); }
+    .verb.strong { background: #ccfbf1; border-color: #5eead4; color: var(--teal); font-weight: 700; }
+
+    /* AVOID */
+    .avoid-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .avoid-chip { padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #fef2f2; border: 1px solid #fecdd3; color: #991b1b; text-decoration: line-through; }
+
+    /* MISC */
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    .divider { height: 1px; background: #e2e8f0; margin: 40px 0; }
+    mark { background: #ccfbf1; color: var(--teal); font-weight: 600; border-radius: 3px; padding: 0 3px; }
+    .header-pill { display: inline-flex; align-items: center; gap: 8px; background: #f0fdfa; border: 1px solid #99f6e4; border-radius: var(--radius-sm); padding: 12px 18px; margin-bottom: 24px; font-size: 13px; color: var(--text-primary); }
+    .header-pill strong { color: var(--teal); }
+
+    footer { background: #ffffff; border-top: 1px solid var(--border); padding: 28px 32px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-icon">🏥</div>
+  <div class="hero-badge">⚕ Medical &amp; Healthcare Leadership</div>
+  <h1>Medical Executive<br>ATS Optimization Guide</h1>
+  <p class="hero-sub">Physician executive, CMO, CCO, and healthcare leadership positioning — keyword banks, resume frameworks, and strategic guidance for academic medical systems. Reference role: Jefferson Health Regional CCO.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-value">6</div><div class="hero-stat-label">Keyword Tiers</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">120+</div><div class="hero-stat-label">Medical ATS Terms</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">4</div><div class="hero-stat-label">Summary Variants</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">100%</div><div class="hero-stat-label">Healthcare-Focused</div></div>
+  </div>
+</header>
+
+<nav class="sticky-nav" id="top-nav">
+  <div class="nav-inner">
+    <a href="#overview" class="nav-link">📋 Overview</a>
+    <a href="#keywords" class="nav-link">🔑 Keywords</a>
+    <div class="nav-sep"></div>
+    <a href="#summaries" class="nav-link">✍️ Summaries</a>
+    <a href="#bullets" class="nav-link">📌 Bullets</a>
+    <a href="#roles" class="nav-link">👔 Role Types</a>
+    <div class="nav-sep"></div>
+    <a href="#scores" class="nav-link">📈 Scores</a>
+    <a href="#verbs" class="nav-link">💪 Verbs</a>
+    <a href="#avoid" class="nav-link">🚫 Avoid</a>
+    <a href="#checklist" class="nav-link">✅ Checklist</a>
+    <a href="#credentials" class="nav-link">🎓 Credentials</a>
+    <a href="#timing" class="nav-link">⏱ Timing</a>
+    <a href="#jefferson" class="nav-link">🏛 Jefferson</a>
+  </div>
+</nav>
+
+<main class="wrapper">
+
+  <section class="section-block" id="overview">
+    <div class="section-title"><span class="icon">📋</span>How to Use This Guide</div>
+    <p class="section-desc">Built for physician executive and healthcare leadership applications. The Jefferson Regional CCO (Stratford, NJ) posting is the primary reference role.</p>
+    <div class="header-pill">🎯 <strong>Target Roles:</strong> Chief Clinical Officer · Chief Medical Officer · VP/SVP Medical Affairs · Regional Medical Director · Associate CMO · Chief Quality Officer · VP Clinical Quality &amp; Safety</div>
+    <div class="two-col">
+      <div class="alert info"><div class="alert-icon">💡</div><div class="alert-body"><div class="alert-title">Step 1 — Mirror the Posting Exactly</div><div class="alert-text">Healthcare ATS systems score exact phrase matches. If the JD says "clinical quality and safety," use those exact words — not "patient quality" or "care safety."</div></div></div>
+      <div class="alert success"><div class="alert-icon">✅</div><div class="alert-body"><div class="alert-title">Step 2 — Load Tier 1 into Every Resume</div><div class="alert-text">Use 12–16 keywords from Tier 1 on every application. Weave them naturally into your summary, skills list, and bullets.</div></div></div>
+      <div class="alert warning"><div class="alert-icon">⚠️</div><div class="alert-body"><div class="alert-title">Step 3 — Quantify at Scale</div><div class="alert-text">Healthcare recruiters want scope: hospitals managed, beds, patient volume, staff size, budget. Lead every bullet with numbers.</div></div></div>
+      <div class="alert danger"><div class="alert-icon">🚫</div><div class="alert-body"><div class="alert-title">Step 4 — Never Use Tables in ATS Submissions</div><div class="alert-text">ATS parsers break on tables. Submit .docx with plain-text skills lists. Run the .txt test before every submission.</div></div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="keywords">
+    <div class="section-title"><span class="icon">🔑</span>ATS Keyword Master List</div>
+    <p class="section-desc">Six tiers organized by importance. <strong>Click any keyword to copy it.</strong> Mirror these exact phrases in your resume — do not paraphrase.</p>
+    <div class="tier-grid">
+
+      <div class="tier-card t1">
+        <div class="tier-label">⭐ Tier 1 — Must Use Always</div>
+        <div class="tier-heading">Core Physician Executive Terms</div>
+        <div class="keyword-list">
+          <span class="kw">Clinical Quality &amp; Safety</span><span class="kw">Chief Clinical Officer (CCO)</span><span class="kw">Chief Medical Officer (CMO)</span><span class="kw">Clinical Governance</span><span class="kw">Quality Improvement (QI)</span><span class="kw">Patient Safety</span><span class="kw">High Reliability Organization (HRO)</span><span class="kw">Value-Based Care</span><span class="kw">Clinical Operations</span><span class="kw">Physician Leadership</span><span class="kw">Medical Staff Leadership</span><span class="kw">Clinical Program Development</span><span class="kw">Healthcare Dyad Leadership</span><span class="kw">Physician Engagement</span><span class="kw">Evidence-Based Medicine (EBM)</span><span class="kw">Care Coordination</span><span class="kw">Population Health</span><span class="kw">Health Equity</span><span class="kw">Patient- and Family-Centered Care</span>
+        </div>
+      </div>
+
+      <div class="tier-card t2">
+        <div class="tier-label">🏥 Tier 2 — Regulatory &amp; Accreditation</div>
+        <div class="tier-heading">Compliance, Accreditation &amp; Standards</div>
+        <div class="keyword-list">
+          <span class="kw">The Joint Commission (TJC)</span><span class="kw">CMS Conditions of Participation</span><span class="kw">DNV Healthcare Accreditation</span><span class="kw">NCQA Accreditation</span><span class="kw">Magnet Recognition</span><span class="kw">Peer Review</span><span class="kw">Credentialing &amp; Privileging</span><span class="kw">Medical Staff Bylaws</span><span class="kw">Regulatory Compliance</span><span class="kw">CMS Star Rating</span><span class="kw">HCAHPS Scores</span><span class="kw">Leapfrog Hospital Safety Grade</span><span class="kw">U.S. News &amp; World Report Rankings</span><span class="kw">Infection Prevention &amp; Control</span><span class="kw">Sentinel Event Review</span><span class="kw">Root Cause Analysis (RCA)</span><span class="kw">FMEA</span><span class="kw">National Patient Safety Goals</span>
+        </div>
+      </div>
+
+      <div class="tier-card t3">
+        <div class="tier-label">📊 Tier 3 — Quality Science &amp; Metrics</div>
+        <div class="tier-heading">Quality Improvement Frameworks</div>
+        <div class="keyword-list">
+          <span class="kw">Lean / Six Sigma</span><span class="kw">PDSA Cycles</span><span class="kw">Performance Improvement (PI)</span><span class="kw">Clinical Decision Support</span><span class="kw">Care Pathways</span><span class="kw">Clinical Protocols</span><span class="kw">Unwarranted Clinical Variation</span><span class="kw">Readmission Reduction</span><span class="kw">Length of Stay (LOS) Optimization</span><span class="kw">Mortality Reduction</span><span class="kw">Sepsis Bundle Compliance</span><span class="kw">Core Measures</span><span class="kw">Hospital-Acquired Conditions (HAC)</span><span class="kw">Adverse Event Reporting</span><span class="kw">Safety Culture Survey</span><span class="kw">Just Culture</span><span class="kw">Harm Reduction</span>
+        </div>
+      </div>
+
+      <div class="tier-card t4">
+        <div class="tier-label">💻 Tier 4 — Technology &amp; Analytics</div>
+        <div class="tier-heading">Digital Health &amp; Data</div>
+        <div class="keyword-list">
+          <span class="kw">Electronic Health Record (EHR)</span><span class="kw">Epic / Cerner / MEDITECH</span><span class="kw">Clinical Analytics</span><span class="kw">Healthcare Data Governance</span><span class="kw">OnPoint Quality Platform</span><span class="kw">Event Reporting System</span><span class="kw">Real-Time Clinical Dashboard</span><span class="kw">Clinical Decision Intelligence</span><span class="kw">Telehealth Integration</span><span class="kw">AI in Healthcare</span><span class="kw">Digital Transformation</span><span class="kw">SDOH Data Integration</span><span class="kw">Clinical Informatics</span><span class="kw">Predictive Analytics</span><span class="kw">Population Health Management Platforms</span>
+        </div>
+      </div>
+
+      <div class="tier-card t5">
+        <div class="tier-label">🎓 Tier 5 — Academic &amp; Research</div>
+        <div class="tier-heading">Academic Medicine &amp; GME</div>
+        <div class="keyword-list">
+          <span class="kw">Academic Medical Center (AMC)</span><span class="kw">Graduate Medical Education (GME)</span><span class="kw">Teaching Hospital</span><span class="kw">Faculty Appointment</span><span class="kw">Professor / Associate Professor</span><span class="kw">Medical Education</span><span class="kw">Residency Program Oversight</span><span class="kw">Continuing Medical Education (CME)</span><span class="kw">Research Integration</span><span class="kw">Clinical Scholarship</span><span class="kw">Simulation Training</span><span class="kw">Health Sciences Education</span>
+        </div>
+      </div>
+
+      <div class="tier-card t6">
+        <div class="tier-label">🌱 Tier 6 — Emerging 2026 Focus</div>
+        <div class="tier-heading">Emerging Healthcare Leadership Terms</div>
+        <div class="keyword-list">
+          <span class="kw">Health Equity Leadership</span><span class="kw">Diversity, Equity &amp; Inclusion (DEI) in Medicine</span><span class="kw">Social Determinants of Health (SDOH)</span><span class="kw">Value-Based Reimbursement</span><span class="kw">Managed Care Integration</span><span class="kw">Ambulatory Care Expansion</span><span class="kw">Continuum of Care</span><span class="kw">Operational Resilience</span><span class="kw">Workforce Well-Being</span><span class="kw">Burnout Prevention</span><span class="kw">AI-Assisted Clinical Decision Support</span><span class="kw">Behavioral Health Integration</span><span class="kw">Accountable Care Organization (ACO)</span><span class="kw">Seamless Continuum of Care</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="summaries">
+    <div class="section-title"><span class="icon">✍️</span>Summary Variants</div>
+    <p class="section-desc">Four ready-to-use summaries. Pick the closest match to your target role, then tailor with exact JD keywords. Never use first-person pronouns — signals junior writing to senior healthcare recruiters.</p>
+
+    <div class="summary-card">
+      <div class="summary-header">
+        <div><div class="summary-label">Summary A — Regional / System CCO (Primary Target)</div><div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Best for: Jefferson-type Regional CCO, System CMO, VP Clinical Operations</div></div>
+        <div class="summary-tags"><span class="tag tag-exec">CCO</span><span class="tag tag-quality">Quality</span><span class="tag tag-lead">Multi-Hospital</span></div>
+      </div>
+      <div class="summary-text">Board-certified physician executive with [X]+ years of progressive clinical leadership across multi-hospital health systems, translating enterprise clinical strategy into regional execution. Experienced in driving clinical quality and safety improvement — achieving measurable reductions in mortality, readmissions, and hospital-acquired conditions (HAC) across a [X]-hospital, [X,000]-bed portfolio. Expert in high reliability organization (HRO) principles, evidence-based care pathway standardization, and unwarranted clinical variation reduction. Demonstrated ability to lead physician-operations dyad partnerships, advance value-based care models, and strengthen physician recruitment, retention, and engagement. Board and Executive Council communicator with deep competency in The Joint Commission (TJC) accreditation, clinical governance, and patient- and family-centered care. Eligible for academic appointment at the rank of [Professor/Associate Professor] at an affiliated School of Medicine.</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-header">
+        <div><div class="summary-label">Summary B — Chief Medical Officer (CMO)</div><div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Best for: CMO, Associate CMO, Medical Director at large health system</div></div>
+        <div class="summary-tags"><span class="tag tag-exec">CMO</span><span class="tag tag-lead">Executive</span><span class="tag tag-acad">Academic</span></div>
+      </div>
+      <div class="summary-text">Physician executive and Chief Medical Officer candidate with [X]+ years leading clinical programs, medical staff governance, and quality and safety strategy across complex, multi-regulated healthcare delivery systems. Combines clinical practice credibility with executive leadership managing hospital and ambulatory care operations at scale. Known for building and empowering multidisciplinary physician leadership teams, championing a culture of just culture and high reliability, and translating clinical evidence into operational protocols that deliver measurable outcomes improvement. Deep expertise in Graduate Medical Education (GME), credentialing and privileging, medical staff bylaws, and The Joint Commission accreditation management. Proven dyad partner with nursing, operations, and enterprise leadership on seamless continuum of care design and value-based reimbursement strategy.</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-header">
+        <div><div class="summary-label">Summary C — Chief Quality Officer / VP Quality &amp; Safety</div><div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Best for: CQO, VP Patient Safety, Director of Quality</div></div>
+        <div class="summary-tags"><span class="tag tag-quality">Quality</span><span class="tag tag-quality">Safety</span><span class="tag tag-lead">Analytics</span></div>
+      </div>
+      <div class="summary-text">Healthcare quality and patient safety leader with [X]+ years designing and executing enterprise-wide clinical quality programs across academic medical centers and multi-hospital health systems. Expert in performance improvement methodology (Lean, Six Sigma, PDSA), high reliability organization (HRO) principles, and data-driven quality measurement platforms. Consistent record of improving CMS Star Ratings, HCAHPS scores, and Leapfrog safety grades through rigorous root cause analysis (RCA), FMEA, and evidence-based care pathway implementation. Skilled in leveraging electronic health record (EHR) analytics and event reporting systems to advance proactive risk identification, sentinel event reduction, and culture of safety transformation. Board of Directors-level communicator on quality performance, regulatory compliance, and patient safety strategy.</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-header">
+        <div><div class="summary-label">Summary D — VP Medical Affairs / Physician Network Leader</div><div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Best for: VP Medical Affairs, Medical Director (Health Plan), Physician Network Leader</div></div>
+        <div class="summary-tags"><span class="tag tag-exec">Medical Affairs</span><span class="tag tag-lead">Health Plan</span><span class="tag tag-quality">Value-Based</span></div>
+      </div>
+      <div class="summary-text">Physician leader with [X]+ years in medical affairs, clinical program development, and value-based care transformation across integrated delivery networks and managed care environments. Experienced in accountable care organization (ACO) development, managed care contract strategy, and population health management platform deployment. Skilled in building physician leadership bench strength, designing clinical integration programs, and advancing health equity through SDOH-informed care models. Combines hands-on clinical practice with executive-level strategic planning across ambulatory, acute, and post-acute care continuums. Demonstrated success engaging front-line physicians, associate medical directors, and service-line leaders around a unified clinical agenda while achieving sustainable financial and quality outcomes.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="bullets">
+    <div class="section-title"><span class="icon">📌</span>Bullet Frameworks (SCAR Method)</div>
+    <p class="section-desc">Every strong healthcare executive bullet follows the SCAR structure: <strong>Scope → Context → Action → Result</strong>. Lead with a strong verb and a number. Fill in brackets with your actual data.</p>
+    <div class="glass-card">
+      <div style="font-weight:700;font-size:15px;color:var(--teal);margin-bottom:16px;">🏗 Formula: [Strong Verb] + [Scale/Scope] + [Action] + [Quantified Result]</div>
+      <div class="bullet-framework">
+        <div class="bullet-framework-title">7 Ready-to-Adapt Bullet Templates</div>
+        <div class="bullet-row"><div class="bullet-label">Clinical Quality &amp; Safety</div><div class="bullet-example">"Directed clinical quality and safety programs across a [X]-hospital, [X,000]-bed regional portfolio, achieving a [X]% reduction in hospital-acquired conditions (HAC) and improving CMS Star Rating from [X] to [X] within [timeframe]."</div></div>
+        <div class="bullet-row"><div class="bullet-label">Physician Leadership &amp; Engagement</div><div class="bullet-example">"Built and empowered a multidisciplinary regional physician leadership team of [X] associate medical directors and [X]+ employed physicians, driving front-line ownership of the clinical quality agenda and improving physician engagement scores by [X]%."</div></div>
+        <div class="bullet-row"><div class="bullet-label">High Reliability / HRO</div><div class="bullet-example">"Championed high reliability organization (HRO) principles across [X] hospitals, implementing structured just culture frameworks and event-reporting platforms that increased near-miss reporting by [X]% and reduced serious safety events by [X]%."</div></div>
+        <div class="bullet-row"><div class="bullet-label">Value-Based Care</div><div class="bullet-example">"Served as transformational change leader in advancing value-based care strategy, leading transition of [X]% of patient volume to value-based reimbursement models and reducing unnecessary utilization by $[X]M annually."</div></div>
+        <div class="bullet-row"><div class="bullet-label">EHR / Clinical Informatics</div><div class="bullet-example">"Leveraged electronic health record (EHR) analytics and OnPoint quality platforms to establish real-time clinical performance dashboards, enabling proactive identification and resolution of care quality gaps across [X] inpatient and ambulatory sites."</div></div>
+        <div class="bullet-row"><div class="bullet-label">Regulatory / Accreditation</div><div class="bullet-example">"Directed The Joint Commission (TJC) survey readiness across [X] hospitals, achieving accreditation with zero Standards-of-Care deficiencies and maintaining Leapfrog A grade for [X] consecutive years."</div></div>
+        <div class="bullet-row"><div class="bullet-label">Health Equity</div><div class="bullet-example">"Advanced health equity and patient- and family-centered care by integrating SDOH screening into [X] clinical programs and partnering with community organizations to close care gap disparities for [X,000]+ underserved patients annually."</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="roles">
+    <div class="section-title"><span class="icon">👔</span>Role Type Strategy Guide</div>
+    <p class="section-desc">Different physician executive roles prioritize different keyword sets. Match your emphasis to what the posting values most.</p>
+
+    <div class="role-card">
+      <div class="role-card-header"><div><div class="role-title">Regional / System Chief Clinical Officer (CCO)</div><div class="role-org">Example: Jefferson Health, UPHS, CommonSpirit, HCA, Northwell</div></div><span class="role-badge badge-exec">⭐ Executive Tier</span></div>
+      <div class="alert info" style="margin-bottom:14px;"><div class="alert-icon">🎯</div><div class="alert-body"><div class="alert-title">Primary Emphasis</div><div class="alert-text">Clinical quality &amp; safety outcomes · Physician dyad leadership · Multi-hospital regional oversight · Translating enterprise strategy → local execution · Board/Executive Council reporting</div></div></div>
+      <div class="keyword-list"><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Regional Clinical Leadership</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Physician-Operations Dyad</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Clinical Quality &amp; Safety</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Value-Based Care</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">High Reliability Organization</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Enterprise Strategy Execution</span><span class="kw" style="background:#ccfbf1;border:1px solid #99f6e4;color:#0f766e;">Physician Engagement &amp; Retention</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-header"><div><div class="role-title">Chief Medical Officer (CMO)</div><div class="role-org">Example: Academic Medical Centers, Community Hospitals, IDNs</div></div><span class="role-badge badge-clinical">🩺 Clinical Executive</span></div>
+      <div class="alert info" style="margin-bottom:14px;"><div class="alert-icon">🎯</div><div class="alert-body"><div class="alert-title">Primary Emphasis</div><div class="alert-text">Medical staff governance · Credentialing &amp; privileging · GME oversight · Clinical program growth · Board Medical Executive Committee</div></div></div>
+      <div class="keyword-list"><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Medical Staff Governance</span><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Credentialing &amp; Privileging</span><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Graduate Medical Education</span><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Medical Executive Committee</span><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Peer Review Process</span><span class="kw" style="background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af;">Service Line Development</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-header"><div><div class="role-title">Chief Quality Officer / VP Patient Safety</div><div class="role-org">Example: Large IDNs, Academic Health Systems, CMS-regulated facilities</div></div><span class="role-badge badge-safety">📊 Quality &amp; Safety</span></div>
+      <div class="alert info" style="margin-bottom:14px;"><div class="alert-icon">🎯</div><div class="alert-body"><div class="alert-title">Primary Emphasis</div><div class="alert-text">Quality metrics &amp; outcomes · HRO / Just Culture · Accreditation management · Event reporting systems · Data-driven QI methodology</div></div></div>
+      <div class="keyword-list"><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">High Reliability Organization</span><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">Root Cause Analysis (RCA)</span><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">FMEA</span><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">CMS Star Rating</span><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">HCAHPS Performance</span><span class="kw" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;">Just Culture</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-header"><div><div class="role-title">VP Medical Affairs / Physician Network Leader</div><div class="role-org">Example: Health Plans, ACOs, Integrated Physician Groups</div></div><span class="role-badge badge-admin">🤝 Network &amp; Strategy</span></div>
+      <div class="alert info" style="margin-bottom:14px;"><div class="alert-icon">🎯</div><div class="alert-body"><div class="alert-title">Primary Emphasis</div><div class="alert-text">Value-based contracts · Population health · Managed care · ACO leadership · Ambulatory care strategy · Physician network development</div></div></div>
+      <div class="keyword-list"><span class="kw" style="background:#d1fae5;border:1px solid #a7f3d0;color:#065f46;">Accountable Care Organization (ACO)</span><span class="kw" style="background:#d1fae5;border:1px solid #a7f3d0;color:#065f46;">Population Health Management</span><span class="kw" style="background:#d1fae5;border:1px solid #a7f3d0;color:#065f46;">Value-Based Reimbursement</span><span class="kw" style="background:#d1fae5;border:1px solid #a7f3d0;color:#065f46;">Managed Care Strategy</span><span class="kw" style="background:#d1fae5;border:1px solid #a7f3d0;color:#065f46;">SDOH-Informed Care</span></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="scores">
+    <div class="section-title"><span class="icon">📈</span>ATS Score Benchmarks</div>
+    <p class="section-desc">Target keyword densities for physician executive ATS systems. Each top-priority keyword should appear 2–4 times across your resume (1.5–3% density). Above 4% triggers keyword-stuffing flags.</p>
+    <div class="glass-card" id="score-section">
+      <div class="score-bar-wrap"><div class="score-label">Clinical Quality &amp; Safety</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="95" style="width:0%"></div></div><div class="score-pct">95%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">Physician Leadership</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="90" style="width:0%"></div></div><div class="score-pct">90%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">Value-Based Care</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="88" style="width:0%"></div></div><div class="score-pct">88%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">High Reliability Organization</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="85" style="width:0%"></div></div><div class="score-pct">85%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">EHR / Clinical Informatics</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="78" style="width:0%"></div></div><div class="score-pct">78%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">Health Equity</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="75" style="width:0%"></div></div><div class="score-pct">75%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">Academic Faculty Affiliation</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="65" style="width:0%"></div></div><div class="score-pct">65%</div></div>
+      <div class="score-bar-wrap"><div class="score-label">Operational Resilience</div><div class="score-bar-bg"><div class="score-bar-fill" data-pct="60" style="width:0%"></div></div><div class="score-pct">60%</div></div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:16px;">Frequency weightings based on analysis of top-tier physician executive postings (Jefferson, UPHS, Northwell, HCA, CommonSpirit, Geisinger).</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="verbs">
+    <div class="section-title"><span class="icon">💪</span>Strong Action Verbs — Medical Edition</div>
+    <p class="section-desc">Lead every bullet with one of these. Medical recruiters respond to leadership authority language. Avoid weak, passive constructions.</p>
+    <div class="glass-card">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--teal);margin-bottom:14px;">⭐ Highest Impact</div>
+      <div class="verb-cloud" style="margin-bottom:24px;">
+        <span class="verb strong">Directed</span><span class="verb strong">Championed</span><span class="verb strong">Built</span><span class="verb strong">Transformed</span><span class="verb strong">Established</span><span class="verb strong">Led</span><span class="verb strong">Designed</span><span class="verb strong">Implemented</span><span class="verb strong">Architected</span><span class="verb strong">Mobilized</span>
+      </div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);margin-bottom:14px;">High Impact — General</div>
+      <div class="verb-cloud">
+        <span class="verb">Oversaw</span><span class="verb">Partnered</span><span class="verb">Advanced</span><span class="verb">Drove</span><span class="verb">Delivered</span><span class="verb">Orchestrated</span><span class="verb">Restructured</span><span class="verb">Modernized</span><span class="verb">Strengthened</span><span class="verb">Accelerated</span><span class="verb">Standardized</span><span class="verb">Deployed</span><span class="verb">Negotiated</span><span class="verb">Advised</span><span class="verb">Cultivated</span><span class="verb">Integrated</span><span class="verb">Translated</span><span class="verb">Fostered</span><span class="verb">Reduced</span><span class="verb">Improved</span><span class="verb">Achieved</span><span class="verb">Scaled</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="avoid">
+    <div class="section-title"><span class="icon">🚫</span>Words to Avoid</div>
+    <p class="section-desc">These terms are flagged by 2026 AI screeners in healthcare ATS systems. Find and replace every one before submitting.</p>
+    <div class="two-col">
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:#991b1b;margin-bottom:14px;">🚫 Banned Buzzwords</div>
+        <div class="avoid-list"><span class="avoid-chip">Leveraged</span><span class="avoid-chip">Spearheaded</span><span class="avoid-chip">Utilized</span><span class="avoid-chip">Synergized</span><span class="avoid-chip">Results-driven</span><span class="avoid-chip">Passionate</span><span class="avoid-chip">Transformative</span><span class="avoid-chip">Innovative</span><span class="avoid-chip">Team player</span><span class="avoid-chip">Detail-oriented</span><span class="avoid-chip">Proactive</span><span class="avoid-chip">Dynamic</span><span class="avoid-chip">Thought leader</span></div>
+      </div>
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:#92400e;margin-bottom:14px;">⚠️ Healthcare-Specific Pitfalls</div>
+        <table class="compare-table">
+          <tr><th>❌ Avoid</th><th>✅ Use Instead</th></tr>
+          <tr><td class="col-avoid">"Helped patients"</td><td class="col-use">"Delivered care to [X,000] patients"</td></tr>
+          <tr><td class="col-avoid">"Worked with doctors"</td><td class="col-use">"Directed physician team of [X]"</td></tr>
+          <tr><td class="col-avoid">"Improved quality"</td><td class="col-use">"Reduced HAC rate by [X]%"</td></tr>
+          <tr><td class="col-avoid">"Strong communicator"</td><td class="col-use">"Board of Directors advisor"</td></tr>
+          <tr><td class="col-avoid">"Patient-focused"</td><td class="col-use">"Patient- and Family-Centered Care"</td></tr>
+          <tr><td class="col-avoid">"Medical knowledge"</td><td class="col-use">"Evidence-Based Medicine (EBM)"</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="checklist">
+    <div class="section-title"><span class="icon">✅</span>Pre-Submit Checklist</div>
+    <p class="section-desc">Complete every item before clicking "Apply." Healthcare executive roles use multi-stage ATS + human review — you must clear both.</p>
+    <div class="two-col">
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:var(--teal);margin-bottom:16px;">📝 Resume Checklist</div>
+        <ul class="checklist">
+          <li><span class="check-icon">☐</span><span>Mirror at least <strong>12–15 exact phrases</strong> from the job description</span></li>
+          <li><span class="check-icon">☐</span><span>Your title in summary <strong>matches or mirrors</strong> the posted title</span></li>
+          <li><span class="check-icon">☐</span><span>All bullets lead with a strong action verb + number</span></li>
+          <li><span class="check-icon">☐</span><span>Hospital scope included: beds, hospitals, budget, staff count</span></li>
+          <li><span class="check-icon">☐</span><span>Board credentials listed (MD/DO + specialty board certification)</span></li>
+          <li><span class="check-icon">☐</span><span>State medical license status noted if required by posting</span></li>
+          <li><span class="check-icon">☐</span><span>Academic appointment or eligibility stated clearly</span></li>
+          <li><span class="check-icon">☐</span><span><strong>No tables</strong> — plain-text skills list only</span></li>
+          <li><span class="check-icon">☐</span><span>Saved as <strong>.docx</strong> unless posting requires PDF</span></li>
+          <li><span class="check-icon">☐</span><span>Ran .txt export test — nothing missing or scrambled</span></li>
+        </ul>
+      </div>
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:var(--teal);margin-bottom:16px;">🎯 Strategy Checklist</div>
+        <ul class="checklist">
+          <li><span class="check-icon">☐</span><span>Scanned for buzzwords and replaced every instance</span></li>
+          <li><span class="check-icon">☐</span><span>Run through <strong>Jobscan.co</strong> — target 75%+ match score</span></li>
+          <li><span class="check-icon">☐</span><span>LinkedIn job titles and dates <strong>exactly match</strong> resume</span></li>
+          <li><span class="check-icon">☐</span><span>Applied Tuesday–Thursday morning, <strong>within 72 hours</strong> of posting</span></li>
+          <li><span class="check-icon">☐</span><span>Identified a <strong>referral contact</strong> inside the organization</span></li>
+          <li><span class="check-icon">☐</span><span>Verified system's key metrics (Star Rating, Leapfrog, rankings)</span></li>
+          <li><span class="check-icon">☐</span><span>Tailored cover letter opening to <strong>their specific clinical challenge</strong></span></li>
+          <li><span class="check-icon">☐</span><span>Confirmed board certification is current and active</span></li>
+          <li><span class="check-icon">☐</span><span>Prepared 3 quantified quality improvement examples for interview</span></li>
+          <li><span class="check-icon">☐</span><span>Researched their dyad model and named their current CCO / CMO</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="credentials">
+    <div class="section-title"><span class="icon">🎓</span>High-Value Credentials &amp; Degrees</div>
+    <p class="section-desc">Healthcare leadership roles increasingly expect a dual clinical + management credential. Prioritize in order of role relevance.</p>
+    <div class="two-col">
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:var(--teal);margin-bottom:14px;">📋 Required for Most Postings</div>
+        <ul class="checklist">
+          <li><span class="check-icon">✅</span><span><strong>MD or DO</strong> — Accredited medical school</span></li>
+          <li><span class="check-icon">✅</span><span><strong>Board Certification</strong> — Active, specialty-aligned</span></li>
+          <li><span class="check-icon">✅</span><span><strong>State Medical License</strong> — Matching the role's state</span></li>
+          <li><span class="check-icon">✅</span><span><strong>10+ years clinical practice</strong> with demonstrated achievement</span></li>
+          <li><span class="check-icon">✅</span><span><strong>7+ years medical leadership</strong> in quality &amp; safety</span></li>
+        </ul>
+      </div>
+      <div class="glass-card">
+        <div style="font-weight:700;font-size:14px;color:var(--gold);margin-bottom:14px;">⭐ Preferred / Differentiating</div>
+        <ul class="checklist">
+          <li><span class="check-icon">🏆</span><span><strong>MBA / MHA / MMM</strong> — Strongly preferred for C-suite</span></li>
+          <li><span class="check-icon">🏆</span><span><strong>CPE</strong> — Certified Physician Executive (ACPE)</span></li>
+          <li><span class="check-icon">🏆</span><span><strong>FACPE / FACHE</strong> — Fellow-level recognition</span></li>
+          <li><span class="check-icon">🏆</span><span><strong>CPHQ</strong> — Certified Professional in Healthcare Quality</span></li>
+          <li><span class="check-icon">🏆</span><span><strong>Lean / Six Sigma Black Belt</strong> — QI methodology</span></li>
+          <li><span class="check-icon">🏆</span><span><strong>IHI Improvement Advisor</strong> — Quality science credibility</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="timing">
+    <div class="section-title"><span class="icon">⏱</span>Application Timing &amp; Interview Strategy</div>
+    <p class="section-desc">Healthcare executive recruiting cycles differ from financial services. Long lead times, committee decisions, and market intelligence matter more than speed.</p>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Day 1–3</div><div class="timeline-title">Apply early — preferably Day 1</div><div class="timeline-text">Healthcare executive ATS funnels are reviewed within 48 hours at major systems. Apply Tuesday–Thursday morning when recruiter attention peaks.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Week 1–2</div><div class="timeline-title">Research the system deeply</div><div class="timeline-text">Know the health system's CMS Star Rating, Leapfrog grade, HCAHPS scores, U.S. News ranking, and any recent press. This is your interview differentiator.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Week 2–4</div><div class="timeline-title">Network into the organization</div><div class="timeline-text">Identify current medical staff leaders or CMO/CCO on LinkedIn. A referral from inside the medical staff increases interview probability 8–12×.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">First Interview</div><div class="timeline-title">Prepare 3 quantified improvement stories</div><div class="timeline-text">Behavioral questions will focus on: a quality crisis you led through, how you built physician engagement, a time you drove culture change, and how you balance clinical and operational leadership.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Executive Presentation</div><div class="timeline-title">Prepare a 90-Day Clinical Vision Plan</div><div class="timeline-text">Most physician executive searches include a presentation round. Prepare a 90-day entry plan showing how you assess regional quality baseline, build physician trust, and prioritize Year 1 quality goals.</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section-block" id="jefferson">
+    <div class="section-title"><span class="icon">🏛</span>Jefferson Health — Role-Specific Notes</div>
+    <p class="section-desc">The Regional CCO (East Region) at Jefferson Health / Kennedy University Hospitals is the primary reference role for this guide.</p>
+    <div class="alert warning" style="margin-bottom:20px;"><div class="alert-icon">⚠️</div><div class="alert-body"><div class="alert-title">Must Use These Exact Jefferson Phrases</div><div class="alert-text">Jefferson's ATS scores these exact terms from the posting: <mark>OnPoint</mark> · <mark>physician-operations dyad</mark> · <mark>clinical quality and safety</mark> · <mark>seamless continuum of care</mark> · <mark>health equity</mark> · <mark>patient- and family-centered care</mark> · <mark>high reliability</mark> · <mark>value-based care</mark></div></div></div>
+    <div class="glass-card">
+      <div style="font-weight:700;font-size:15px;color:var(--teal);margin-bottom:16px;">🏥 Jefferson East Region Context</div>
+      <ul class="checklist">
+        <li><span class="check-icon">📍</span><span><strong>Location:</strong> Kennedy University Hospitals, Inc — 18 East Laurel Rd, Stratford, NJ</span></li>
+        <li><span class="check-icon">🏥</span><span><strong>System scale:</strong> 32 hospital campuses, 700+ outpatient locations, 65,000+ colleagues</span></li>
+        <li><span class="check-icon">🎓</span><span><strong>Academic:</strong> Sidney Kimmel Medical College — mention faculty appointment eligibility (Professor/Associate Professor)</span></li>
+        <li><span class="check-icon">📊</span><span><strong>QI Platform:</strong> OnPoint — call out EHR leverage and data-informed improvement explicitly in your bullets</span></li>
+        <li><span class="check-icon">🤝</span><span><strong>Governance:</strong> Physician-operations dyad + CCO Cabinet — emphasize your dyad leadership experience prominently</span></li>
+        <li><span class="check-icon">🌱</span><span><strong>Health equity mandate:</strong> Explicitly named in JD — demonstrate DEI in care delivery and SDOH integration</span></li>
+        <li><span class="check-icon">📜</span><span><strong>License:</strong> PA Medical License required upon hire — note NJ + PA dual licensure if applicable</span></li>
+        <li><span class="check-icon">🏆</span><span><strong>Required experience:</strong> 10 years clinical practice + 7 years complex medical leadership in quality &amp; safety</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer style="background:#ffffff;border-top:1px solid var(--border);padding:28px 32px;text-align:center;">
+  <p style="font-size:13px;color:var(--text-muted);">Medical Executive ATS Guide — John Yam · Jefferson RCCO Reference Role · 2026</p>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">See also: <a href="Medical_Resume_Builder.html" style="color:var(--teal);text-decoration:none;font-weight:600;">Medical Resume Builder →</a></p>
+</footer>
+
+<script>
+  // Active nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Animate score bars on scroll
+  const scoreEl = document.getElementById('score-section');
+  const scoreObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.score-bar-fill').forEach(bar => {
+          const pct = bar.getAttribute('data-pct');
+          setTimeout(() => { bar.style.width = pct + '%'; }, 100);
+        });
+        scoreObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  if (scoreEl) scoreObs.observe(scoreEl);
+
+  // Click-to-copy keywords
+  document.querySelectorAll('.kw').forEach(kw => {
+    kw.title = 'Click to copy';
+    kw.addEventListener('click', () => {
+      const text = kw.textContent.replace('✓ Copied!', '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = kw.textContent;
+        kw.textContent = '✓ Copied!';
+        setTimeout(() => { kw.textContent = orig; }, 1200);
+      }).catch(() => {});
+    });
+  });
+</script>
+</body>
+</html>
