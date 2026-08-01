@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Math Knight: Quest for the Golden Chest - Free-roaming RPG math game with 10 Shop Equipment Items, Active Abilities, Realistic Non-Blocky Villains, Gold Economy, and 8 levels.">
+    <title>Math Knight: Quest for the Golden Chest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Red Hit Flash Overlay -->
+    <div id="hit-flash-overlay"></div>
+
+    <div id="app-container">
+        <!-- Top Game Header -->
+        <header class="game-header">
+            <div class="brand-title">
+                <span style="font-size: 2rem;">⚔️</span>
+                <h1>Math Knight</h1>
+            </div>
+
+            <div class="header-controls">
+                <!-- Gold Coin Display -->
+                <div class="gold-badge" id="gold-display" title="Earn Gold Coins by solving math equations!">
+                    🪙 <span id="gold-count">20</span> Coins
+                </div>
+
+                <!-- Quick Drink Potion Button -->
+                <button id="btn-use-potion" class="btn-icon" style="border-color: #2ed573; color: #2ed573;" title="Drink a Healing Elixir Potion to restore 100% HP!">
+                    🧪 Potion (<span id="potion-count">0</span>)
+                </button>
+
+                <button id="btn-toggle-mode" class="btn-icon" style="border-color: var(--accent-cyan); color: var(--accent-cyan);" title="Switch between Walking Exploration & Math Battle">
+                    🏃 Mode: Explore
+                </button>
+                <button id="btn-inventory" class="btn-icon" title="Buy Knight Armor Equipment & Potions in the Store!">
+                    🛡️ Store
+                </button>
+                <button id="btn-world-map" class="btn-icon" title="View 8 World Levels Map">
+                    🗺️ Level Map
+                </button>
+                <button id="btn-scratchpad-toggle" class="btn-icon" title="Toggle Scratchpad Workspace">
+                    ✏️ Scratchpad
+                </button>
+                <button id="btn-settings" class="btn-icon" title="Game Settings">
+                    ⚙️ Settings
+                </button>
+                <button id="btn-audio" class="btn-icon" title="Toggle Audio Sound Effects">
+                    🔊 Sound
+                </button>
+                <a href="README.html" class="btn-icon" target="_blank" title="View Game README Documentation">
+                    📖 README
+                </a>
+                <a href="map.html" class="btn-icon" target="_blank" title="View Architecture Project Map">
+                    🗺️ Map
+                </a>
+            </div>
+        </header>
+
+        <!-- Battle & Exploration Canvas Card -->
+        <section class="arena-card">
+            <canvas id="battle-canvas" width="960" height="340"></canvas>
+
+            <!-- Mode Indicator Overlay -->
+            <div id="mode-banner" class="mode-banner">
+                🚶 EXPLORE MODE - Walk around using WASD / Arrow Keys or D-Pad!
+            </div>
+
+            <!-- Status Overlays -->
+            <div class="battle-overlay">
+                <!-- Knight Status -->
+                <div class="fighter-status">
+                    <div class="fighter-name">
+                        <span id="knight-title">Squire Knight</span>
+                        <span id="knight-hp-text" class="fighter-level">HP: 100/100</span>
+                    </div>
+                    <div class="bar-container">
+                        <div id="knight-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div>
+                    </div>
+                    <div style="margin-top: 4px; display: flex; justify-content: space-between; font-size: 0.8rem;">
+                        <span style="color: var(--accent-purple);" id="knight-level-num">Lvl 1 Novice</span>
+                        <span style="color: var(--text-muted);" id="knight-xp-text">XP: 0/100</span>
+                    </div>
+                    <div class="bar-container" style="height: 6px; margin-top: 2px;">
+                        <div id="knight-xp-bar" class="bar-fill xp-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Creature Enemy Status -->
+                <div class="fighter-status" id="enemy-status-card" style="text-align: right;">
+                    <div class="fighter-name" style="justify-content: flex-end; gap: 8px;">
+                        <span id="enemy-hp-text" class="fighter-level">HP: 50/50</span>
+                        <span id="enemy-name" style="color: var(--accent-red);">King Slime</span>
+                    </div>
+                    <div class="bar-container">
+                        <div id="enemy-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Virtual D-Pad Overlay for Walking Controls -->
+            <div id="virtual-dpad" class="dpad-container">
+                <button class="btn-dpad dpad-up" id="dpad-u">▲</button>
+                <button class="btn-dpad dpad-left" id="dpad-l">◀</button>
+                <button class="btn-dpad dpad-right" id="dpad-r">▶</button>
+                <button class="btn-dpad dpad-down" id="dpad-d">▼</button>
+            </div>
+
+            <!-- Current Level Badge -->
+            <div class="level-badge" id="level-badge">
+                Level 1: Whispering Forest (Untimed)
+            </div>
+        </section>
+
+        <!-- Countdown Timer Bar (Activated for Timed Levels in Battle) -->
+        <div id="timer-container" class="timer-container">
+            <div id="timer-bar" class="timer-fill"></div>
+        </div>
+
+        <!-- Math Question & Keypad Panel -->
+        <main class="math-panel" id="math-panel">
+            <div class="question-box">
+                <div class="question-text" id="equation-text">8 + 7 = ?</div>
+                <div class="question-hint" id="equation-hint">Count the total items to power your sword!</div>
+                <!-- Visual Counter Dots for 2nd Grade Learning Support -->
+                <div class="visual-counters" id="visual-counters"></div>
+            </div>
+
+            <!-- Answer Display & Strike Button -->
+            <div class="answer-box">
+                <div class="answer-input-display" id="answer-display">?</div>
+                <button id="btn-submit" class="btn-attack">⚔️ ATTACK!</button>
+            </div>
+
+            <!-- On-Screen Keypad -->
+            <div class="keypad-grid">
+                <button class="btn-key" data-key="1">1</button>
+                <button class="btn-key" data-key="2">2</button>
+                <button class="btn-key" data-key="3">3</button>
+                <button class="btn-key action-del" data-key="del">⌫</button>
+
+                <button class="btn-key" data-key="4">4</button>
+                <button class="btn-key" data-key="5">5</button>
+                <button class="btn-key" data-key="6">6</button>
+                <button class="btn-key action-clear" data-key="clear">C</button>
+
+                <button class="btn-key" data-key="7">7</button>
+                <button class="btn-key" data-key="8">8</button>
+                <button class="btn-key" data-key="9">9</button>
+                <button class="btn-key" data-key="0">0</button>
+            </div>
+        </main>
+
+        <!-- Collapsible Math Scratchpad Workspace -->
+        <section id="scratchpad-section" class="scratchpad-container">
+            <div class="scratchpad-toolbar">
+                <span class="scratchpad-title">✏️ Math Scratchpad - Draw & Calculate Here</span>
+                <div style="display: flex; gap: 8px;">
+                    <button id="btn-scratch-clear" class="btn-icon" style="padding: 4px 10px; font-size: 0.85rem;">Clear Drawing</button>
+                </div>
+            </div>
+            <canvas id="scratch-canvas" width="920" height="180"></canvas>
+        </section>
+    </div>
+
+    <!-- Level Map Modal (12 Levels) -->
+    <div id="modal-map" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>🗺️ Math Knight World Campaign (12 Levels)</h2>
+                <button class="btn-close" data-close="modal-map">&times;</button>
+            </div>
+
+            <div class="level-map-grid" id="level-map-grid">
+                <!-- Level cards rendered dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="modal-settings" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>⚙️ Game Settings</h2>
+                <button class="btn-close" data-close="modal-settings">&times;</button>
+            </div>
+
+            <div class="setting-group">
+                <label class="setting-label">Math Operations (2nd Grade Level):</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="opt-add" checked>
+                        <span>➕ Addition (e.g. 9 + 6, 25 + 14)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="opt-sub" checked>
+                        <span>➖ Subtraction (e.g. 15 - 8, 40 - 18)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="opt-arrays" checked>
+                        <span>📦 Groups & Word Problems (Levels 7-8)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-group" style="margin-top: 10px;">
+                <button id="btn-reset-game" class="btn-icon" style="background: rgba(255, 71, 87, 0.2); border-color: red; color: #ff4757; width: 100%; justify-content: center; padding: 12px;">
+                    🔄 Reset Knight Progress
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knight Armor & Gear Shop Modal with 15 Items -->
+    <div id="modal-inventory" class="modal-overlay">
+        <div class="modal-card" style="max-width: 760px;">
+            <div class="modal-header">
+                <h2>🛡️ Knight Store (15 Equipment Items & Potions)</h2>
+                <button class="btn-close" data-close="modal-inventory">&times;</button>
+            </div>
+
+            <p style="color: var(--accent-cyan); font-size: 0.95rem;">Solve math equations to earn 🪙 Gold Coins! Equip weapons, armor, rings, boots, and potions!</p>
+            <div id="shop-message" style="color: #2ed573; font-weight: bold; font-size: 0.95rem; min-height: 20px; margin-bottom: 8px;"></div>
+
+            <div class="shop-grid" id="shop-grid">
+                <!-- Golden Helmet -->
+                <div class="shop-card" id="shop-helmet">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🪖</div>
+                        <div class="shop-title">
+                            <h4>Golden Helmet</h4>
+                            <p>+20 HP & <strong>Holy Aura</strong> (+5 HP Regen on correct answer!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-helmet" onclick="buyArmor('helmet', 50, 20, 0)">Buy for 50 🪙</button>
+                </div>
+
+                <!-- Flaming Sword -->
+                <div class="shop-card" id="shop-sword">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">⚔️</div>
+                        <div class="shop-title">
+                            <h4>Flaming Sword</h4>
+                            <p>+15 Damage & <strong>Fireball Slash</strong> (+5 Burn Damage!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-sword" onclick="buyArmor('sword', 80, 0, 15)">Buy for 80 🪙</button>
+                </div>
+
+                <!-- Swift Boots -->
+                <div class="shop-card" id="shop-boots">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">👢</div>
+                        <div class="shop-title">
+                            <h4>Swift Boots of Speed</h4>
+                            <p>+10 HP & <strong>Dash Step</strong> (+3 Walking Speed in Explore!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-boots" onclick="buyArmor('boots', 60, 10, 0)">Buy for 60 🪙</button>
+                </div>
+
+                <!-- Elixir of Full Healing -->
+                <div class="shop-card" id="shop-potion">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🧪</div>
+                        <div class="shop-title">
+                            <h4>Elixir of Full Healing</h4>
+                            <p><strong>Instant Revitalize</strong> (Restores HP to 100% Full Health or adds to Potion Inventory!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-potion" onclick="buyArmor('potion', 40, 0, 0)">Buy Potion for 40 🪙</button>
+                </div>
+
+                <!-- Dragon Shield -->
+                <div class="shop-card" id="shop-shield">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🛡️</div>
+                        <div class="shop-title">
+                            <h4>Dragon Shield</h4>
+                            <p><strong>Shield Deflect</strong> (Blocks 50% damage & reflects 10 DMG to enemy!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-shield" onclick="buyArmor('shield', 100, 0, 0)">Buy for 100 🪙</button>
+                </div>
+
+                <!-- Ring of Fortune -->
+                <div class="shop-card" id="shop-ring">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">💍</div>
+                        <div class="shop-title">
+                            <h4>Ring of Fortune</h4>
+                            <p><strong>Fortune's Blessing</strong> (+50% Bonus XP & +5 Extra Gold per equation!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-ring" onclick="buyArmor('ring', 120, 0, 0)">Buy for 120 🪙</button>
+                </div>
+
+                <!-- Enchanted Cloak -->
+                <div class="shop-card" id="shop-cloak">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🧥</div>
+                        <div class="shop-title">
+                            <h4>Enchanted Cloak</h4>
+                            <p><strong>Time Warp</strong> (+5s extra timer & +2 Walking Speed!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-cloak" onclick="buyArmor('cloak', 150, 0, 0)">Buy for 150 🪙</button>
+                </div>
+
+                <!-- Frost Hammer -->
+                <div class="shop-card" id="shop-frostHammer">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🔨</div>
+                        <div class="shop-title">
+                            <h4>Frost Hammer</h4>
+                            <p>+20 DMG & <strong>Glacial Freeze</strong> (Ice Shards & 30% chance to Freeze monster!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-frostHammer" onclick="buyArmor('frostHammer', 160, 0, 20)">Buy for 160 🪙</button>
+                </div>
+
+                <!-- Phoenix Amulet -->
+                <div class="shop-card" id="shop-phoenixAmulet">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🪶</div>
+                        <div class="shop-title">
+                            <h4>Phoenix Amulet</h4>
+                            <p>+15 HP & <strong>Phoenix Wings</strong> (Flame Wings & Auto-Revive 50% HP once per level!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-phoenixAmulet" onclick="buyArmor('phoenixAmulet', 175, 15, 0)">Buy for 175 🪙</button>
+                </div>
+
+                <!-- Thunder Blade Upgrade -->
+                <div class="shop-card" id="shop-thunderBlade">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">⚡</div>
+                        <div class="shop-title">
+                            <h4>Thunder Blade Upgrade</h4>
+                            <p><strong>Lightning Strike</strong> (+25 Bonus Lightning Damage!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-thunderBlade" onclick="buyArmor('thunderBlade', 180, 0, 25)">Buy for 180 🪙</button>
+                </div>
+
+                <!-- Vorpal Dagger -->
+                <div class="shop-card" id="shop-vorpalDagger">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🗡️</div>
+                        <div class="shop-title">
+                            <h4>Vorpal Dagger</h4>
+                            <p>+30 DMG & <strong>Triple Blade Burst</strong> (25% chance for 3-hit slash combo!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-vorpalDagger" onclick="buyArmor('vorpalDagger', 210, 0, 30)">Buy for 210 🪙</button>
+                </div>
+
+                <!-- Astral Ring of Wisdom -->
+                <div class="shop-card" id="shop-astralRing">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🔮</div>
+                        <div class="shop-title">
+                            <h4>Astral Ring of Wisdom</h4>
+                            <p>+30 HP & <strong>Mind Focus</strong> (+100% XP & auto-hint guidance!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-astralRing" onclick="buyArmor('astralRing', 230, 30, 0)">Buy for 230 🪙</button>
+                </div>
+
+                <!-- Victory Crown -->
+                <div class="shop-card" id="shop-crown" style="grid-column: span 2;">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">👑</div>
+                        <div class="shop-title">
+                            <h4>Legendary Victory Crown</h4>
+                            <p>+50 HP, <strong>2x Gold Coins</strong> & <strong>Royal Smite</strong> (15% chance for 100 Critical DMG!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-crown" onclick="buyArmor('crown', 200, 50, 0)">Buy for 200 🪙</button>
+                </div>
+
+                <!-- Sacred Aegis Armor -->
+                <div class="shop-card" id="shop-aegisArmor" style="grid-column: span 2;">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🛡️</div>
+                        <div class="shop-title">
+                            <h4>Paladin's Sacred Aegis Armor</h4>
+                            <p>+60 Max HP & <strong>Divine Invulnerability</strong> (20% chance to absorb ALL monster damage!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-aegisArmor" onclick="buyArmor('aegisArmor', 250, 60, 0)">Buy for 250 🪙</button>
+                </div>
+
+                <!-- Infinity Titan Scepter -->
+                <div class="shop-card" id="shop-titanScepter" style="grid-column: span 2;">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">🪄</div>
+                        <div class="shop-title">
+                            <h4>Infinity Titan Scepter</h4>
+                            <p>+45 DMG & <strong>Cosmic Cataclysm</strong> (Falling Meteor Shower & Starlight Explosion!)</p>
+                        </div>
+                    </div>
+                    <button class="btn-buy" id="buy-titanScepter" onclick="buyArmor('titanScepter', 300, 0, 45)">Buy for 300 🪙</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chest Reward / Level Win Modal -->
+    <div id="modal-chest" class="modal-overlay">
+        <div class="modal-card chest-reward-card">
+            <div class="chest-icon-large">🎁</div>
+            <h2 class="reward-title" id="reward-title">Treasure Chest Unlocked!</h2>
+            <p class="reward-desc" id="reward-desc">You unlocked the Golden Knight Helmet!</p>
+            <button id="btn-next-level" class="btn-attack" style="margin-top: 16px; width: 100%;">
+                ⚔️ ONWARD TO NEXT LEVEL!
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="modal-gameover" class="modal-overlay">
+        <div class="modal-card chest-reward-card">
+            <div class="chest-icon-large">🛡️</div>
+            <h2 class="reward-title" style="color: var(--accent-red);">Knight Defeated!</h2>
+            <p class="reward-desc">The creature attacked and knocked you down! Try again to strike back!</p>
+            <button id="btn-retry" class="btn-attack" style="margin-top: 16px; width: 100%; background: linear-gradient(135deg, #ff4757, #ff6b81);">
+                🔄 RETRY LEVEL
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Scripts -->
+    <script src="audio.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
