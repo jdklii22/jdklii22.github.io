@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       SEO META — edit the title, description, and keywords below
+       ============================================================ -->
+  <title>[STUDIO NAME] | Lash Extensions &amp; Brow Studio in [City, State]</title>
+  <meta name="description" content="[STUDIO NAME] is a boutique lash extension and brow studio in [City, State]. Offering classic, hybrid, and volume lash extensions, lash lifts, brow lamination, shaping, and tinting. Book your appointment today." />
+  <meta name="keywords" content="lash extensions [City], brow studio [City], lash lift [City], brow lamination, volume lashes, [City State] lash bar" />
+  <meta property="og:title" content="[STUDIO NAME] — Lash &amp; Brow Artistry" />
+  <meta property="og:description" content="Boutique lash extension &amp; brow studio in [City, State]. Precision artistry in a warm, intimate setting." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Cormorant Garamond (elegant serif headings) + Inter (clean body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — palette, type scale, spacing
+       ============================================================ */
+    :root {
+      /* Palette */
+      --cream:        hsl(38, 30%, 96%);
+      --cream-mid:    hsl(36, 20%, 91%);
+      --blush:        hsl(14, 22%, 85%);
+      --taupe:        hsl(30, 12%, 55%);
+      --taupe-dark:   hsl(28, 10%, 35%);
+      --charcoal:     hsl(25, 8%, 18%);
+      --accent:       hsl(16, 48%, 38%);    /* deep terracotta */
+      --accent-light: hsl(16, 38%, 92%);
+      --accent-hover: hsl(16, 52%, 30%);
+      --white:        #ffffff;
+
+      /* Typography */
+      --font-serif:   'Cormorant Garamond', Georgia, serif;
+      --font-sans:    'Inter', system-ui, sans-serif;
+
+      /* Spacing */
+      --section-pad:  clamp(4rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+      --card-radius:  1rem;
+      --nav-h:        68px;
+
+      /* Transitions */
+      --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+    body {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--charcoal);
+      background: var(--cream);
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ============================================================
+       TYPOGRAPHY HELPERS
+       ============================================================ */
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    h1 { font-size: clamp(2.8rem, 7vw, 5rem); }
+    h2 { font-size: clamp(2rem, 4.5vw, 3rem); }
+    h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+
+    .text-center { text-align: center; }
+    .section-intro {
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+      color: var(--taupe-dark);
+    }
+    .section-intro p { margin-top: 0.75rem; }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 3rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 4px 18px hsl(16 48% 38% / 0.35);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 6px 24px hsl(16 48% 38% / 0.45);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid hsl(25 8% 18% / 0.35);
+    }
+    .btn-secondary:hover { border-color: var(--charcoal); background: hsl(25 8% 18% / 0.05); }
+
+    /* ============================================================
+       NAVIGATION — sticky, blurs on scroll
+       ============================================================ */
+    #site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.25rem, 5vw, 3.5rem);
+      background: hsl(38 30% 96% / 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid hsl(30 12% 55% / 0.18);
+      transition: box-shadow 0.3s;
+    }
+    #site-nav.scrolled { box-shadow: 0 2px 20px hsl(25 8% 18% / 0.08); }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--charcoal);
+    }
+    .nav-logo em { color: var(--accent); font-style: italic; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--taupe-dark);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0; right: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s var(--ease-out);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* Mobile hamburger */
+    #nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+    }
+    #nav-toggle span {
+      display: block;
+      height: 1.5px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.2s;
+    }
+    #nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    #nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    #nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      #nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        inset: var(--nav-h) 0 0 0;
+        background: var(--cream);
+        padding: 2.5rem 2rem;
+        gap: 0;
+        overflow-y: auto;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid var(--cream-mid);
+        display: block;
+        width: 100%;
+      }
+      .nav-links .btn { margin-top: 1rem; align-self: flex-start; }
+    }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    #home {
+      position: relative;
+      min-height: calc(100svh - var(--nav-h));
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--charcoal);
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      opacity: 0.82;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        hsl(25 8% 8% / 0.75) 0%,
+        hsl(25 8% 8% / 0.48) 55%,
+        hsl(25 8% 8% / 0.18) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 7vw, 5rem);
+      max-width: 680px;
+      animation: heroFadeUp 0.9s var(--ease-out) both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content .eyebrow { color: hsl(16 38% 80%); margin-bottom: 0.75rem; }
+    .hero-content h1 {
+      color: var(--white);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 em { font-style: italic; color: hsl(16 38% 82%); }
+    .hero-tagline {
+      color: hsl(38 30% 88% / 0.88);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-weight: 300;
+      margin-bottom: 2.25rem;
+      max-width: 480px;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+    .hero-ctas .btn-secondary { color: var(--white); border-color: hsl(38 30% 88% / 0.6); }
+    .hero-ctas .btn-secondary:hover { background: hsl(38 30% 88% / 0.12); border-color: var(--white); }
+
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: hsl(38 30% 88% / 0.5);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: scrollPulse 2.4s ease-in-out infinite;
+    }
+    .hero-scroll-cue::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, hsl(38 30% 88% / 0.5), transparent);
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(5px); }
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+       ============================================================ */
+    #about {
+      padding: var(--section-pad);
+      background: var(--white);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .about-text .eyebrow { margin-bottom: 0.6rem; }
+    .about-text h2 { margin-bottom: 1.25rem; }
+    .about-text p {
+      color: var(--taupe-dark);
+      font-size: 1.05rem;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .trust-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .badge {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--cream);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--cream-mid);
+    }
+    .badge-icon {
+      width: 38px; height: 38px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .badge-text strong { display: block; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; color: var(--charcoal); margin-bottom: 0.1rem; }
+    .badge-text span { font-size: 0.78rem; color: var(--taupe); }
+
+    .about-image-wrap {
+      position: relative;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .about-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .about-image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border: 2px solid var(--accent-light);
+      border-radius: calc(var(--card-radius) + 2px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       SERVICES & PRICING SECTION
+       ============================================================ */
+    #services { padding: var(--section-pad); background: var(--cream); }
+    .services-wrapper { max-width: 1050px; margin: 0 auto; }
+    .service-category { margin-bottom: 3.5rem; }
+    .service-category:last-child { margin-bottom: 0; }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1.5px solid var(--cream-mid);
+    }
+    .category-header h3 { color: var(--charcoal); }
+    .category-pill {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.25rem 0.7rem;
+      border-radius: 2rem;
+    }
+    .service-table { width: 100%; border-collapse: separate; border-spacing: 0 0.5rem; }
+    .service-table thead th {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      padding: 0.4rem 1rem;
+      text-align: left;
+    }
+    .service-table thead th:last-child { text-align: right; }
+    .service-row {
+      background: var(--white);
+      border-radius: var(--card-radius);
+      transition: box-shadow 0.2s, transform 0.2s var(--ease-out);
+    }
+    .service-row:hover { box-shadow: 0 4px 22px hsl(25 8% 18% / 0.07); transform: translateY(-1px); }
+    .service-row td { padding: 1rem 1rem; vertical-align: middle; }
+    .service-row td:first-child { border-radius: var(--card-radius) 0 0 var(--card-radius); }
+    .service-row td:last-child  { border-radius: 0 var(--card-radius) var(--card-radius) 0; text-align: right; }
+    .service-name { font-family: var(--font-serif); font-size: 1.08rem; font-weight: 400; color: var(--charcoal); display: block; }
+    .service-desc { font-size: 0.8rem; color: var(--taupe); margin-top: 0.1rem; }
+    .service-duration { font-size: 0.82rem; color: var(--taupe); white-space: nowrap; }
+    .service-price { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; color: var(--accent); white-space: nowrap; }
+
+    @media (max-width: 600px) {
+      .service-table thead { display: none; }
+      .service-table tbody, .service-row, .service-row td { display: block; width: 100%; }
+      .service-row { margin-bottom: 0.5rem; border-radius: var(--card-radius); }
+      .service-row td { padding: 0.6rem 1rem; border-radius: 0 !important; }
+      .service-row td[data-label]::before { content: attr(data-label) ': '; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--taupe); }
+      .service-row td:last-child { text-align: left; }
+    }
+
+    /* ============================================================
+       GALLERY SECTION
+       ============================================================ */
+    #gallery { padding: var(--section-pad); background: var(--white); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      aspect-ratio: 3/4;
+      background: var(--cream-mid);
+    }
+    .gallery-btn {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .gallery-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .gallery-item:hover .gallery-btn img { transform: scale(1.05); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: hsl(25 8% 8% / 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+    .gallery-item:hover .gallery-overlay { background: hsl(25 8% 8% / 0.3); }
+    .gallery-overlay svg {
+      opacity: 0;
+      color: var(--white);
+      transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s var(--ease-out);
+    }
+    .gallery-item:hover .gallery-overlay svg { opacity: 1; transform: scale(1); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      padding: 1rem 0.75rem 0.75rem;
+      background: linear-gradient(transparent, hsl(25 8% 8% / 0.6));
+      color: var(--white);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    /* Lightbox dialog */
+    #lightbox {
+      padding: 0;
+      border: none;
+      background: transparent;
+      max-width: 100vw;
+      max-height: 100dvh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.94);
+      transition:
+        opacity 0.35s ease-out,
+        transform 0.35s var(--ease-out),
+        display 0.35s allow-discrete,
+        overlay 0.35s allow-discrete;
+      transition-behavior: allow-discrete;
+    }
+    #lightbox[open] { opacity: 1; transform: scale(1); }
+    @starting-style { #lightbox[open] { opacity: 0; transform: scale(0.94); } }
+    #lightbox::backdrop {
+      background: hsl(25 8% 5% / 0);
+      transition:
+        display 0.35s allow-discrete,
+        overlay 0.35s allow-discrete,
+        background-color 0.35s ease-out;
+      transition-behavior: allow-discrete;
+    }
+    #lightbox[open]::backdrop { background: hsl(25 8% 5% / 0.92); }
+    @starting-style { #lightbox[open]::backdrop { background: hsl(25 8% 5% / 0); } }
+    @media (prefers-reduced-motion: reduce) { #lightbox { transform: none; transition-duration: 0.1s; } }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: min(90vw, 820px);
+      max-height: 90dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox-img { max-width: 100%; max-height: 88dvh; border-radius: 0.75rem; object-fit: contain; box-shadow: 0 24px 80px hsl(25 8% 5% / 0.7); }
+    .lightbox-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: hsl(38 30% 96% / 0.18);
+      border: 1px solid hsl(38 30% 96% / 0.3);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s;
+      font-size: 1.25rem;
+    }
+    .lightbox-btn:hover { background: hsl(38 30% 96% / 0.3); }
+    #lb-prev { left: -56px; }
+    #lb-next { right: -56px; }
+    @media (max-width: 700px) { #lb-prev { left: 0.5rem; } #lb-next { right: 0.5rem; } }
+    #lb-close {
+      position: absolute;
+      top: -2.75rem;
+      right: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: hsl(38 30% 96% / 0.15);
+      border: 1px solid hsl(38 30% 96% / 0.25);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s;
+      font-size: 1.1rem;
+    }
+    #lb-close:hover { background: hsl(38 30% 96% / 0.28); }
+    #lb-caption {
+      position: absolute;
+      bottom: -2.25rem;
+      left: 0; right: 0;
+      text-align: center;
+      color: hsl(38 30% 88% / 0.75);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       REVIEWS / TESTIMONIALS
+       ============================================================ */
+    #reviews { padding: var(--section-pad); background: var(--cream); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+    .review-card {
+      background: var(--white);
+      border-radius: var(--card-radius);
+      padding: 1.75rem;
+      border: 1px solid var(--cream-mid);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: box-shadow 0.2s, transform 0.2s var(--ease-out);
+    }
+    .review-card:hover { box-shadow: 0 8px 32px hsl(25 8% 18% / 0.08); transform: translateY(-3px); }
+    .stars { color: var(--accent); font-size: 0.9rem; letter-spacing: 0.05em; }
+    .review-text { font-family: var(--font-serif); font-size: 1.08rem; font-style: italic; font-weight: 300; color: var(--charcoal); line-height: 1.6; flex-grow: 1; }
+    .review-text::before { content: '\201C'; }
+    .review-text::after  { content: '\201D'; }
+    .reviewer { display: flex; align-items: center; gap: 0.75rem; }
+    .reviewer-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .reviewer-name { font-weight: 600; font-size: 0.88rem; color: var(--charcoal); }
+    .reviewer-source { font-size: 0.74rem; color: var(--taupe); }
+
+    /* ============================================================
+       POLICIES & FAQ — accordion (<details>/<summary>)
+       ============================================================ */
+    #policies { padding: var(--section-pad); background: var(--white); }
+    #faq { padding: var(--section-pad); background: var(--cream); }
+    .accordion-wrap { max-width: 760px; margin: 0 auto; }
+
+    details.accordion-item { border-bottom: 1px solid var(--cream-mid); overflow: hidden; }
+    details.accordion-item:first-of-type { border-top: 1px solid var(--cream-mid); }
+    details.accordion-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      transition: color 0.2s;
+      user-select: none;
+      gap: 1rem;
+    }
+    details.accordion-item summary::-webkit-details-marker { display: none; }
+    details.accordion-item summary:hover { color: var(--accent); }
+    .accordion-icon {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      color: var(--accent);
+      transition: transform 0.3s var(--ease-out);
+    }
+    details[open] .accordion-icon { transform: rotate(45deg); }
+    .accordion-body { padding: 0 0 1.5rem; color: var(--taupe-dark); font-size: 0.95rem; font-weight: 300; line-height: 1.8; }
+    .accordion-body ul { padding-left: 1.25rem; }
+    .accordion-body ul li { list-style: disc; margin-bottom: 0.4rem; }
+    .accordion-body p + p { margin-top: 0.75rem; }
+
+    /* ============================================================
+       LOCATION & HOURS
+       ============================================================ */
+    #location { padding: var(--section-pad); background: var(--white); }
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1050px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .location-grid { grid-template-columns: 1fr; } }
+
+    .map-placeholder {
+      background: var(--cream-mid);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid hsl(30 12% 55% / 0.25);
+      position: relative;
+    }
+    .map-placeholder iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .map-placeholder-msg { text-align: center; color: var(--taupe); font-size: 0.88rem; padding: 1.5rem; }
+    .map-placeholder-msg strong { display: block; color: var(--taupe-dark); margin-bottom: 0.35rem; }
+
+    .hours-card .eyebrow { margin-bottom: 0.6rem; }
+    .hours-card h2 { margin-bottom: 0.5rem; }
+    .studio-address { display: flex; align-items: flex-start; gap: 0.5rem; color: var(--taupe-dark); font-size: 0.95rem; margin-bottom: 1.75rem; }
+    .studio-address svg { flex-shrink: 0; margin-top: 3px; color: var(--accent); }
+    .hours-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+    .hours-table tr { border-bottom: 1px solid var(--cream-mid); }
+    .hours-table td { padding: 0.6rem 0; font-size: 0.92rem; color: var(--taupe-dark); }
+    .hours-table td:first-child { font-weight: 500; color: var(--charcoal); }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table tr.closed td { color: var(--taupe); font-style: italic; }
+    .hours-table tr.today td { color: var(--accent); font-weight: 600; }
+    .parking-note {
+      background: var(--cream);
+      border-radius: 0.75rem;
+      padding: 0.9rem 1rem;
+      font-size: 0.85rem;
+      color: var(--taupe-dark);
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+    .parking-note svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+
+    /* ============================================================
+       CONTACT / FOOTER CTA
+       ============================================================ */
+    #contact { padding: var(--section-pad); background: var(--charcoal); color: var(--cream); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    #contact .eyebrow { color: hsl(16 38% 72%); }
+    #contact h2 { color: var(--white); margin-bottom: 1rem; }
+    #contact p { color: hsl(38 20% 72%); font-weight: 300; margin-bottom: 2rem; }
+
+    .contact-details { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.7rem; color: hsl(38 20% 78%); font-size: 0.95rem; transition: color 0.2s; }
+    .contact-link svg { color: var(--accent); flex-shrink: 0; }
+    .contact-link:hover { color: var(--white); }
+    .social-row { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    .social-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: hsl(38 20% 78% / 0.12);
+      border: 1px solid hsl(38 20% 78% / 0.2);
+      color: hsl(38 20% 78%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .social-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--white); }
+
+    .contact-form-wrap h3 { font-family: var(--font-serif); font-weight: 300; font-size: 1.5rem; color: var(--white); margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(38 20% 65%); margin-bottom: 0.4rem; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: hsl(38 20% 78% / 0.08);
+      border: 1px solid hsl(38 20% 78% / 0.2);
+      border-radius: 0.5rem;
+      color: var(--white);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+    .form-group select option { background: var(--charcoal); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: hsl(38 20% 60%); }
+    .form-group input:focus, .form-group textarea:focus { border-color: hsl(16 48% 58%); background: hsl(38 20% 78% / 0.12); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      padding: 0.9rem 1.75rem;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 3rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s var(--ease-out), box-shadow 0.2s;
+      box-shadow: 0 4px 18px hsl(16 48% 38% / 0.4);
+    }
+    .form-submit:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 24px hsl(16 48% 38% / 0.5); }
+    .form-success {
+      display: none;
+      padding: 1rem;
+      background: hsl(16 38% 20%);
+      border: 1px solid hsl(16 48% 38% / 0.4);
+      border-radius: 0.5rem;
+      color: hsl(16 38% 80%);
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    .book-cta-band {
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid hsl(38 20% 78% / 0.15);
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+    .book-cta-band p { color: hsl(38 20% 65%); font-size: 0.9rem; margin-bottom: 1.25rem; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: hsl(25 8% 12%);
+      padding: 1.75rem clamp(1.25rem, 5vw, 3.5rem);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: hsl(38 20% 50%);
+      font-size: 0.8rem;
+    }
+    footer a { color: inherit; transition: color 0.2s; }
+    footer a:hover { color: var(--cream); }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+
+    /* ============================================================
+       SCROLL-REVEAL UTILITY
+       ============================================================ */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ============================================================
+       MISC
+       ============================================================ */
+    .container { max-width: 1050px; margin: 0 auto; }
+
+    /* Skip link (accessibility) */
+    .skip-link { position: absolute; top: -999px; left: 0; padding: 0.5rem 1rem; background: var(--accent); color: var(--white); font-size: 0.85rem; border-radius: 0 0 0.5rem 0; z-index: 9999; }
+    .skip-link:focus { top: 0; }
+  </style>
+</head>
+<body>
+
+<!-- Accessibility: skip to main content -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ============================================================
+     NAVIGATION — sticky glassmorphism bar
+     ============================================================ -->
+<nav id="site-nav" role="navigation" aria-label="Main navigation">
+  <a href="#home" class="nav-logo" id="nav-logo-link" aria-label="Studio home"></a>
+
+  <button id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation menu">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </button>
+
+  <ul class="nav-links" id="nav-menu" role="list">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a id="nav-book-btn" class="btn btn-primary" href="#BOOKING_LINK">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main id="main-content">
+
+  <!-- ============================================================
+       1. HERO — full-bleed photo, tagline, CTAs
+       ============================================================ -->
+  <section id="home" aria-label="Welcome to the studio">
+    <div class="hero-bg" aria-hidden="true">
+      <!-- To change the hero photo: replace the src below with your image path or URL -->
+      <img
+        src="lash_studio_hero_1786049868666.jpg"
+        alt=""
+        fetchpriority="high"
+        id="hero-img"
+      />
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 id="hero-heading"></h1>
+      <p class="hero-tagline" id="hero-tagline"></p>
+      <div class="hero-ctas">
+        <a id="hero-book-btn" class="btn btn-primary" href="#BOOKING_LINK">Book an Appointment</a>
+        <a class="btn btn-secondary" href="#services">View Services</a>
+      </div>
+    </div>
+    <div class="hero-scroll-cue" aria-hidden="true">Scroll</div>
+  </section>
+
+  <!-- ============================================================
+       2. ABOUT — studio story & trust badges
+       ============================================================ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="eyebrow">Our Story</p>
+        <h2 id="about-heading"></h2>
+        <div id="about-body"></div>
+        <div class="trust-badges" id="trust-badges"></div>
+      </div>
+      <div class="about-image-wrap reveal">
+        <!-- Replace src with an owner/studio photo -->
+        <img
+          src="gallery_brow_shape_1786049943583.jpg"
+          alt="[OWNER NAME], licensed lash artist, at work in the studio"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. SERVICES & PRICING — edit prices in the JS SERVICES array
+       ============================================================ -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="services-wrapper">
+      <div class="section-intro text-center reveal">
+        <p class="eyebrow">What We Offer</p>
+        <h2 id="services-heading">Services &amp; Pricing</h2>
+        <p>All services are performed in a clean, relaxed studio environment. New clients receive a complimentary consultation. Prices may vary based on lash condition and desired look.</p>
+      </div>
+      <div id="services-container" class="reveal"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. GALLERY — 9-image grid, lightbox on click
+       To swap photos: update GALLERY_IMAGES array in the JS below
+       ============================================================ -->
+  <section id="gallery" aria-labelledby="gallery-heading">
+    <div class="section-intro text-center reveal">
+      <p class="eyebrow">Portfolio</p>
+      <h2 id="gallery-heading">Our Work</h2>
+      <p>Every set is customized to enhance your unique features. Browse our portfolio for inspiration — then book your appointment!</p>
+    </div>
+    <div class="gallery-grid reveal" id="gallery-grid" role="list"></div>
+  </section>
+
+  <!-- Lightbox dialog — keyboard + click navigable, native <dialog> -->
+  <dialog id="lightbox" aria-label="Image lightbox" aria-modal="true">
+    <div class="lightbox-inner">
+      <button id="lb-close" aria-label="Close lightbox">&#x2715;</button>
+      <button id="lb-prev" class="lightbox-btn" aria-label="Previous image">&#8592;</button>
+      <img id="lightbox-img" src="" alt="" />
+      <button id="lb-next" class="lightbox-btn" aria-label="Next image">&#8594;</button>
+      <p id="lb-caption" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <!-- ============================================================
+       5. REVIEWS — edit in JS REVIEWS array
+       ============================================================ -->
+  <section id="reviews" aria-labelledby="reviews-heading">
+    <div class="section-intro text-center reveal">
+      <p class="eyebrow">Client Love</p>
+      <h2 id="reviews-heading">What Our Clients Say</h2>
+      <p>Don't just take our word for it — hear from the real people who trust us with their lashes &amp; brows.</p>
+    </div>
+    <div class="reviews-grid reveal" id="reviews-grid"></div>
+  </section>
+
+  <!-- ============================================================
+       6. POLICIES & AFTERCARE — collapsible accordion
+       Edit text in the JS POLICIES array
+       ============================================================ -->
+  <section id="policies" aria-labelledby="policies-heading">
+    <div class="accordion-wrap">
+      <div class="section-intro text-center reveal">
+        <p class="eyebrow">Good to Know</p>
+        <h2 id="policies-heading">Policies &amp; Aftercare</h2>
+        <p>Please review our policies before your visit. Proper aftercare ensures the longest-lasting results.</p>
+      </div>
+      <div id="policies-container" class="reveal"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. FAQ — collapsible accordion
+       Edit questions in JS FAQ array
+       ============================================================ -->
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="accordion-wrap container">
+      <div class="section-intro text-center reveal">
+        <p class="eyebrow">Questions?</p>
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+      </div>
+      <div id="faq-container" class="reveal"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. LOCATION & HOURS — edit address, hours, & map embed in JS
+       ============================================================ -->
+  <section id="location" aria-labelledby="location-heading">
+    <div class="location-grid">
+      <!-- GOOGLE MAP EMBED:
+           1. Go to maps.google.com
+           2. Search your address
+           3. Click Share → Embed a map → Copy HTML
+           4. Replace the <div class="map-placeholder"> below with the <iframe> code
+           (Keep it wrapped in a div with the same aspect-ratio styling if desired) -->
+      <div class="map-placeholder">
+        <div class="map-placeholder-msg">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto 0.5rem;color:var(--accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+          <strong>[GOOGLE MAP EMBED PLACEHOLDER]</strong>
+          Replace this element with your Google Maps &lt;iframe&gt; embed code.
+        </div>
+      </div>
+
+      <div class="hours-card reveal">
+        <p class="eyebrow">Find Us</p>
+        <h2 id="location-heading">Location &amp; Hours</h2>
+        <div class="studio-address">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+          <span id="studio-address-text"></span>
+        </div>
+        <table class="hours-table" aria-label="Studio hours" id="hours-table"></table>
+        <div class="parking-note">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/></svg>
+          <span id="parking-note-text"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       9. CONTACT & BOOK — final CTA + contact form
+       ============================================================ -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="contact-grid">
+
+      <!-- Left: info + book button -->
+      <div class="reveal">
+        <p class="eyebrow">Get in Touch</p>
+        <h2 id="contact-heading">Ready for Your Glow-Up?</h2>
+        <p>Book your appointment online anytime, or reach out with questions. We'd love to hear from you.</p>
+
+        <!--
+          BOOKING BUTTON — replace href with your booking platform URL:
+          Vagaro:   https://www.vagaro.com/your-studio-slug
+          Fresha:   https://www.fresha.com/book-now/...
+          Square:   https://squareup.com/appointments/book/...
+          Calendly: https://calendly.com/your-name
+          Booksy:   https://booksy.com/en-us/...
+        -->
+        <a id="footer-book-btn" class="btn btn-primary" href="#BOOKING_LINK" style="margin-bottom:2rem;">
+          Book an Appointment
+        </a>
+
+        <div class="contact-details" id="contact-details"></div>
+        <div class="social-row" id="social-row"></div>
+      </div>
+
+      <!-- Right: contact form (client-side only) -->
+      <div class="contact-form-wrap reveal">
+        <h3>Send a Message</h3>
+        <form id="contact-form" novalidate aria-label="Contact form">
+          <div class="form-group">
+            <label for="cf-name">Your Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email Address</label>
+            <input type="email" id="cf-email" name="email" placeholder="jane@example.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="cf-service">Service Interest (optional)</label>
+            <select id="cf-service" name="service">
+              <option value="">Select a service…</option>
+              <option>Classic Lash Extensions</option>
+              <option>Hybrid Lash Extensions</option>
+              <option>Volume Lash Extensions</option>
+              <option>Mega Volume Lashes</option>
+              <option>Lash Fill</option>
+              <option>Lash Lift &amp; Tint</option>
+              <option>Brow Shaping</option>
+              <option>Brow Tint</option>
+              <option>Brow Lamination</option>
+              <option>Other / General Question</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell us a bit about what you're looking for…" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message &rarr;</button>
+          <div class="form-success" id="form-success" role="status" aria-live="polite">
+            ✓ Thank you! We'll be in touch within 24 hours.
+          </div>
+        </form>
+      </div>
+
+      <!-- Full-width booking band -->
+      <div class="book-cta-band reveal">
+        <p>Online booking is available 24/7. Appointments fill quickly — secure your spot today.</p>
+        <a class="btn btn-primary" href="#BOOKING_LINK" style="font-size:1rem;padding:0.9rem 2.5rem;">
+          Book Now &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <span id="footer-copyright"></span>
+  <nav class="footer-nav" aria-label="Footer navigation">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#policies">Policies</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</footer>
+
+
+<!-- ============================================================
+  ╔══════════════════════════════════════════════════════════════╗
+  ║              ✏️  OWNER EDIT ZONE  ✏️                        ║
+  ║  Everything below is what you edit.                          ║
+  ║  Change names, prices, hours, text — NOT the structure.      ║
+  ╚══════════════════════════════════════════════════════════════╝
+  ============================================================ -->
+<script>
+'use strict';
+
+/* ================================================================
+   STEP 1 — STUDIO IDENTITY
+   Change these first. They appear everywhere on the page.
+   ================================================================ */
+const STUDIO_NAME    = '[STUDIO NAME]';           // e.g.  "Lumi Lash Studio"
+const STUDIO_TAGLINE = 'Lash & brow artistry in [City, State]';
+const STUDIO_SUBTITLE= 'Where precision meets artistry.';
+const CITY_STATE     = '[City, State]';           // e.g.  "Austin, TX"
+
+/* ================================================================
+   STEP 2 — CONTACT & BOOKING INFORMATION
+   ================================================================ */
+const CONTACT = {
+  phone:      '[PHONE NUMBER]',          // e.g.  "(512) 555-0199"
+  email:      '[EMAIL ADDRESS]',         // e.g.  "hello@lumilashstudio.com"
+  instagram:  '[INSTAGRAM HANDLE]',      // e.g.  "@lumilashstudio"  (include @)
+  facebook:   '[FACEBOOK PAGE NAME]',    // e.g.  "Lumi Lash Studio"
+
+  /* YOUR BOOKING PLATFORM URL — replace the string in quotes:
+     Vagaro:   https://www.vagaro.com/your-studio-slug
+     Fresha:   https://www.fresha.com/book-now/...
+     Square:   https://squareup.com/appointments/book/...
+     Calendly: https://calendly.com/your-name                      */
+  bookingUrl: '#BOOKING_LINK_PLACEHOLDER',
+};
+
+/* ================================================================
+   STEP 3 — ADDRESS & HOURS
+   ================================================================ */
+const ADDRESS = '[STREET ADDRESS], [City, State ZIP]';
+// e.g.  "123 Main Street, Suite 4, Austin, TX 78701"
+
+const PARKING_NOTE = '[PARKING INFO] — e.g. Free street parking on Main St. Paid garage at the corner of 2nd & Elm.';
+
+/* Use 'closed' (lowercase) for days the studio is not open */
+const HOURS = [
+  { day: 'Monday',    hours: '[e.g. 10:00 AM – 6:00 PM]' },
+  { day: 'Tuesday',   hours: '[e.g. 10:00 AM – 6:00 PM]' },
+  { day: 'Wednesday', hours: '[e.g. 10:00 AM – 6:00 PM]' },
+  { day: 'Thursday',  hours: '[e.g. 10:00 AM – 7:00 PM]' },
+  { day: 'Friday',    hours: '[e.g. 10:00 AM – 7:00 PM]' },
+  { day: 'Saturday',  hours: '[e.g. 9:00 AM – 5:00 PM]'  },
+  { day: 'Sunday',    hours: 'closed' },
+];
+
+/* ================================================================
+   STEP 4 — ABOUT / STUDIO STORY
+   ================================================================ */
+const ABOUT_HEADING = "Artistry You Can Trust,\nResults You'll Love.";
+
+const ABOUT_PARAGRAPHS = [
+  `[STUDIO NAME] was founded in [YEAR] by [OWNER NAME], a licensed and certified lash artist with a passion for making every client feel effortlessly beautiful. What started as a dream has grown into [City]'s most-trusted boutique lash and brow destination.`,
+  `Every appointment is a one-on-one experience — no rushing, no shortcuts. We use only professional-grade, hypoallergenic lash products and take pride in customizing each set to flatter your unique eye shape and lifestyle.`,
+];
+
+/* Trust badges — edit icon (emoji), label, and detail text */
+const TRUST_BADGES = [
+  { icon: '🎓', label: 'Licensed & Insured',      detail: 'Certified lash professional' },
+  { icon: '⭐', label: '5-Star Rated',             detail: 'Google & Yelp verified reviews' },
+  { icon: '🌿', label: 'Hypoallergenic Products',  detail: 'Safe for sensitive eyes' },
+  { icon: '✨', label: '[X]+ Years Experience',    detail: 'Expert precision every time' },
+];
+
+/* ================================================================
+   STEP 5 — SERVICES & PRICING
+   Replace every [PRICE] with your real price, e.g. "$185"
+   ================================================================ */
+const SERVICES = [
+  {
+    category: 'Lash Extensions',
+    items: [
+      { name: 'Classic Full Set',      desc: 'One extension per natural lash. Clean, defined, natural-glam look.',                                     duration: '90–120 min', price: '[PRICE]' },
+      { name: 'Hybrid Full Set',       desc: 'Mix of classic and volume fans for a textured, wispy effect.',                                           duration: '120 min',    price: '[PRICE]' },
+      { name: 'Volume Full Set',       desc: 'Handcrafted fans of 2–6 ultra-fine extensions for a fluffy, full look.',                                  duration: '150 min',    price: '[PRICE]' },
+      { name: 'Mega Volume Full Set',  desc: 'Maximum drama — ultra-dense fans for a bold, glamorous finish.',                                          duration: '180 min',    price: '[PRICE]' },
+    ],
+  },
+  {
+    category: 'Lash Fills',
+    items: [
+      { name: 'Classic Fill (2-week)',  desc: 'Recommended every 2–3 weeks to maintain your classic set.',           duration: '60 min',  price: '[PRICE]' },
+      { name: 'Hybrid Fill (2-week)',   desc: 'Refresh and maintain your hybrid lash set.',                          duration: '75 min',  price: '[PRICE]' },
+      { name: 'Volume Fill (2-week)',   desc: 'Keep your volume set looking full and fresh.',                        duration: '90 min',  price: '[PRICE]' },
+      { name: 'Mega Volume Fill',       desc: 'Recommended every 2 weeks for optimal retention.',                    duration: '105 min', price: '[PRICE]' },
+      { name: 'Lash Removal',          desc: 'Safe, professional removal of all lash extensions.',                  duration: '30 min',  price: '[PRICE]' },
+    ],
+  },
+  {
+    category: 'Lash Lift & Tint',
+    items: [
+      { name: 'Lash Lift',             desc: 'Semi-permanent curl that lasts 6–8 weeks. No extensions required.',                   duration: '60 min', price: '[PRICE]' },
+      { name: 'Lash Lift + Tint',      desc: 'Lift with a keratin tint for darker, more defined natural lashes.',                   duration: '75 min', price: '[PRICE]' },
+    ],
+  },
+  {
+    category: 'Brow Services',
+    items: [
+      { name: 'Brow Shaping',           desc: 'Custom mapping and shaping for your unique face structure.',                          duration: '30 min', price: '[PRICE]' },
+      { name: 'Brow Tint',              desc: 'Semi-permanent tint that adds depth and definition. Lasts 3–4 weeks.',                duration: '20 min', price: '[PRICE]' },
+      { name: 'Brow Shape + Tint',      desc: 'The perfect pair — shaping and tint in one appointment.',                             duration: '45 min', price: '[PRICE]' },
+      { name: 'Brow Lamination',        desc: 'A restructuring treatment that sets brow hairs in a brushed-up style for 6–8 weeks.',duration: '60 min', price: '[PRICE]' },
+      { name: 'Brow Lamination + Tint', desc: 'Lamination paired with a tint for full, defined, feathery brows.',                   duration: '75 min', price: '[PRICE]' },
+    ],
+  },
+];
+
+/* ================================================================
+   STEP 6 — GALLERY IMAGES
+   Replace each src with your own image file name or URL.
+   Keep the caption short — it shows in the lightbox.
+   ================================================================ */
+const GALLERY_IMAGES = [
+  { src: 'gallery_classic_lashes_1786049883404.jpg',  alt: 'Classic lash extensions — natural, wispy, defined',     caption: 'Classic Lash Extensions' },
+  { src: 'gallery_volume_lashes_1786049890499.jpg',   alt: 'Volume lash extensions — full, fluffy, glamorous',       caption: 'Volume Lash Extensions'  },
+  { src: 'gallery_brow_lamination_1786049897475.jpg', alt: 'Brow lamination — brushed up, full, natural',             caption: 'Brow Lamination'         },
+  { src: 'gallery_lash_lift_1786049904325.jpg',       alt: 'Lash lift and tint — naturally curled, tinted',           caption: 'Lash Lift & Tint'        },
+  { src: 'gallery_hybrid_lashes_1786049911241.jpg',   alt: 'Hybrid lash extensions — mix of classic and volume',      caption: 'Hybrid Lash Extensions'  },
+  { src: 'gallery_brow_tint_1786049918346.jpg',       alt: 'Brow tint — defined, arched, sculpted brows',             caption: 'Brow Shape & Tint'       },
+  { src: 'gallery_mega_volume_1786049936636.jpg',     alt: 'Mega volume lash extensions — bold, dramatic, full',       caption: 'Mega Volume Lashes'      },
+  { src: 'gallery_brow_shape_1786049943583.jpg',      alt: 'Lash artist applying professional brow treatment',         caption: 'In the Studio'           },
+  { src: 'gallery_studio_ambiance_1786049952157.jpg', alt: 'Warm, elegant boutique lash studio interior',              caption: 'Our Studio Space'        },
+];
+
+/* ================================================================
+   STEP 7 — CLIENT REVIEWS
+   Paste in real Google / Yelp reviews here.
+   ================================================================ */
+const REVIEWS = [
+  {
+    stars:  5,
+    text:   '[PASTE REAL REVIEW — e.g. "Absolutely obsessed with my lashes! [OWNER NAME] was so meticulous and my set looks better than any lashes I\'ve ever had. The studio is gorgeous and the vibe is so relaxed. I won\'t go anywhere else."]',
+    name:   '[CLIENT NAME] — e.g. Sarah M.',
+    source: 'Google Review',
+  },
+  {
+    stars:  5,
+    text:   '[PASTE REAL REVIEW — e.g. "I got a brow lamination and tint and I am OBSESSED. My brows have never looked so full and defined. The process was totally painless and [OWNER NAME] explained everything. Highly recommend!"]',
+    name:   '[CLIENT NAME] — e.g. Priya K.',
+    source: 'Yelp Review',
+  },
+  {
+    stars:  5,
+    text:   '[PASTE REAL REVIEW — e.g. "Best lash fills I\'ve ever gotten. My extensions last 4+ weeks with proper care and always look amazing. Love this studio — tiny, private, and the most relaxing hour of my week."]',
+    name:   '[CLIENT NAME] — e.g. Taylor R.',
+    source: 'Google Review',
+  },
+  {
+    stars:  5,
+    text:   '[PASTE REAL REVIEW — e.g. "As someone with very sensitive eyes, I was nervous about lash extensions. [OWNER NAME] walked me through everything, used hypoallergenic products, and my eyes had zero reaction. Gorgeous result!"]',
+    name:   '[CLIENT NAME] — e.g. Jordan L.',
+    source: 'Google Review',
+  },
+];
+
+/* ================================================================
+   STEP 8 — POLICIES & AFTERCARE
+   Edit text. Keep HTML tags (like <strong>, <ul>, <li>) intact.
+   ================================================================ */
+const POLICIES = [
+  {
+    title: 'Booking & Cancellation Policy',
+    body: `
+      <p>All appointments require a credit card to reserve your spot. We kindly ask for <strong>at least 24 hours' notice</strong> if you need to cancel or reschedule.</p>
+      <p>Cancellations or rescheduling made within 24 hours will incur a fee of <strong>[CANCELLATION FEE]</strong>. No-shows will be charged <strong>50% of the service price</strong>.</p>
+      <p>We understand life happens — please reach out as early as possible and we will do our best to accommodate you.</p>
+    `,
+  },
+  {
+    title: 'Late Arrival Policy',
+    body: `
+      <p>Please arrive on time for your appointment. <strong>Grace period: [e.g. 10 minutes].</strong></p>
+      <p>Arriving late may result in a shortened service or rescheduling to avoid impacting the next client. Late arrival fees may apply.</p>
+    `,
+  },
+  {
+    title: 'New Client Prep — What to Do Before Your Appointment',
+    body: `
+      <ul>
+        <li>Arrive with <strong>no mascara or eye makeup</strong> on your lashes or lash line.</li>
+        <li>Remove contact lenses before your appointment (bring your case and solution).</li>
+        <li>Avoid caffeine 1–2 hours before — it can cause eye twitching!</li>
+        <li>Come with clean, oil-free lashes. Do not apply any lash serum 24 hours prior.</li>
+        <li>If you have had lash extensions elsewhere, let us know in your booking notes.</li>
+      </ul>
+    `,
+  },
+  {
+    title: 'Lash Extension Aftercare',
+    body: `
+      <ul>
+        <li><strong>First 24–48 hours:</strong> Avoid all water, steam, and humidity (no hot showers, swimming, saunas, or sweaty workouts).</li>
+        <li>Do <strong>not</strong> use oil-based products near the eye area — oil breaks down lash adhesive.</li>
+        <li>Gently brush lashes daily with the provided spoolie, always brushing from base to tip.</li>
+        <li>Sleep on your back or use a silk pillowcase to reduce friction.</li>
+        <li>Avoid rubbing or pulling your lashes.</li>
+        <li>Use only oil-free makeup remover around the eyes.</li>
+        <li>Book your fill every <strong>2–3 weeks</strong> for optimal retention.</li>
+      </ul>
+    `,
+  },
+  {
+    title: 'Lash Lift & Brow Lamination Aftercare',
+    body: `
+      <ul>
+        <li>Keep lashes/brows dry for <strong>24 hours</strong> after your appointment.</li>
+        <li>Avoid steam, saunas, swimming, and excessive sweating for 48 hours.</li>
+        <li>Do not use any perming, tinting, or chemical products near the area for 48 hours.</li>
+        <li>Apply the nourishing serum provided daily to maintain the treatment.</li>
+        <li>Results last approximately <strong>6–8 weeks</strong>.</li>
+      </ul>
+    `,
+  },
+];
+
+/* ================================================================
+   STEP 9 — FAQ
+   Add or remove question/answer pairs as needed.
+   ================================================================ */
+const FAQ = [
+  {
+    q: 'How long do lash extensions last?',
+    a: 'Lash extensions follow your natural lash growth cycle, shedding as your natural lashes shed. Most clients need a fill every 2–3 weeks. With proper aftercare, you can retain 50–70% of your extensions between fills.',
+  },
+  {
+    q: 'Do lash extensions damage natural lashes?',
+    a: 'When applied by a trained, certified artist using the correct weight of extension, lash extensions do not damage natural lashes. Damage typically occurs from improper application, picking/pulling extensions, or wearing extensions that are too heavy for your natural lashes. We carefully assess your lash health at every appointment.',
+  },
+  {
+    q: 'Does it hurt? What does it feel like?',
+    a: "Not at all — most clients find lash appointments incredibly relaxing and even fall asleep! You'll lie with your eyes closed while extensions are applied one by one to your natural lashes. There is no discomfort during application.",
+  },
+  {
+    q: 'How do I prepare for my first appointment?',
+    a: 'Arrive with clean, makeup-free eyes (no mascara, eye shadow, or eyeliner near the lash line). Remove contacts before your appointment. Avoid caffeine and plan to relax for the duration of your service.',
+  },
+  {
+    q: 'What is the difference between Classic, Hybrid, and Volume?',
+    a: "Classic lashes apply one extension per natural lash for a clean, defined look. Volume uses handmade fans of 2–6 ultra-fine lashes for a fuller, fluffier effect. Hybrid blends both techniques for a textured, wispy look that falls between the two — it's our most popular style!",
+  },
+  {
+    q: 'Do I need to do anything special after a brow lamination?',
+    a: 'Yes! For the first 24 hours, keep your brows dry and avoid steam, saunas, swimming, or sweating. After 48 hours, you can resume all normal activities. We recommend a daily nourishing brow serum to keep hairs healthy and conditioned.',
+  },
+];
+
+/* ================================================================
+   ——— DO NOT EDIT BELOW THIS LINE ———
+   The code below reads your data above and builds the page.
+   ================================================================ */
+
+/* Update document title */
+document.title = `${STUDIO_NAME} | Lash Extensions & Brow Studio in ${CITY_STATE}`;
+
+/* NAV LOGO */
+document.getElementById('nav-logo-link').innerHTML = `<em>${STUDIO_NAME}</em>`;
+
+/* Update all booking links */
+document.querySelectorAll('[href="#BOOKING_LINK"]').forEach(el => { el.href = CONTACT.bookingUrl; });
+
+/* HERO */
+document.getElementById('hero-eyebrow').textContent = `Boutique Lash & Brow Bar · ${CITY_STATE}`;
+document.getElementById('hero-heading').innerHTML   = `${STUDIO_NAME}<br><em>${STUDIO_SUBTITLE}</em>`;
+document.getElementById('hero-tagline').textContent = STUDIO_TAGLINE;
+
+/* ABOUT */
+document.getElementById('about-heading').innerHTML = ABOUT_HEADING.replace('\n', '<br>');
+document.getElementById('about-body').innerHTML    = ABOUT_PARAGRAPHS.map(p => `<p>${p}</p>`).join('');
+document.getElementById('trust-badges').innerHTML  = TRUST_BADGES.map(b => `
+  <div class="badge">
+    <div class="badge-icon" aria-hidden="true">${b.icon}</div>
+    <div class="badge-text"><strong>${b.label}</strong><span>${b.detail}</span></div>
+  </div>
+`).join('');
+
+/* SERVICES */
+document.getElementById('services-container').innerHTML = SERVICES.map(cat => `
+  <div class="service-category">
+    <div class="category-header">
+      <h3>${cat.category}</h3>
+      <span class="category-pill">${cat.items.length} service${cat.items.length > 1 ? 's' : ''}</span>
+    </div>
+    <table class="service-table" aria-label="${cat.category} services">
+      <thead><tr><th scope="col">Service</th><th scope="col">Duration</th><th scope="col">Price</th></tr></thead>
+      <tbody>
+        ${cat.items.map(s => `
+          <tr class="service-row">
+            <td data-label="Service"><span class="service-name">${s.name}</span><span class="service-desc">${s.desc}</span></td>
+            <td class="service-duration" data-label="Duration">${s.duration}</td>
+            <td class="service-price" data-label="Price">${s.price}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  </div>
+`).join('');
+
+/* GALLERY */
+document.getElementById('gallery-grid').innerHTML = GALLERY_IMAGES.map((img, i) => `
+  <div class="gallery-item" role="listitem">
+    <button class="gallery-btn" aria-label="Open ${img.caption} in lightbox" data-index="${i}">
+      <img src="${img.src}" alt="${img.alt}" loading="lazy" />
+      <div class="gallery-overlay">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/>
+        </svg>
+      </div>
+      <span class="gallery-caption">${img.caption}</span>
+    </button>
+  </div>
+`).join('');
+
+/* LIGHTBOX */
+const lightbox  = document.getElementById('lightbox');
+const lbImg     = document.getElementById('lightbox-img');
+const lbCaption = document.getElementById('lb-caption');
+let currentIdx  = 0;
+
+function showImage(idx) {
+  currentIdx = ((idx % GALLERY_IMAGES.length) + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+  lbImg.src           = GALLERY_IMAGES[currentIdx].src;
+  lbImg.alt           = GALLERY_IMAGES[currentIdx].alt;
+  lbCaption.textContent = GALLERY_IMAGES[currentIdx].caption;
+}
+
+document.querySelectorAll('.gallery-btn').forEach(btn => {
+  btn.addEventListener('click', () => { showImage(parseInt(btn.dataset.index, 10)); lightbox.showModal(); });
+});
+document.getElementById('lb-close').addEventListener('click', () => lightbox.close());
+document.getElementById('lb-prev').addEventListener('click', () => showImage(currentIdx - 1));
+document.getElementById('lb-next').addEventListener('click', () => showImage(currentIdx + 1));
+
+/* Light-dismiss (fallback for browsers without closedby attribute) */
+lightbox.addEventListener('click', e => {
+  if (e.target !== lightbox) return;
+  const r = lightbox.getBoundingClientRect();
+  const inside = r.top <= e.clientY && e.clientY <= r.top + r.height && r.left <= e.clientX && e.clientX <= r.left + r.width;
+  if (!inside) lightbox.close();
+});
+
+lightbox.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); showImage(currentIdx - 1); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); showImage(currentIdx + 1); }
+});
+
+/* REVIEWS */
+document.getElementById('reviews-grid').innerHTML = REVIEWS.map(r => `
+  <article class="review-card">
+    <div class="stars" aria-label="${r.stars} out of 5 stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+    <p class="review-text">${r.text}</p>
+    <div class="reviewer">
+      <div class="reviewer-avatar" aria-hidden="true">${r.name.charAt(0)}</div>
+      <div><div class="reviewer-name">${r.name}</div><div class="reviewer-source">${r.source}</div></div>
+    </div>
+  </article>
+`).join('');
+
+/* POLICIES accordion */
+document.getElementById('policies-container').innerHTML = POLICIES.map((p, i) => `
+  <details class="accordion-item" ${i === 0 ? 'open' : ''}>
+    <summary>
+      <span>${p.title}</span>
+      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </summary>
+    <div class="accordion-body">${p.body}</div>
+  </details>
+`).join('');
+
+/* FAQ accordion */
+document.getElementById('faq-container').innerHTML = FAQ.map(f => `
+  <details class="accordion-item">
+    <summary>
+      <span>${f.q}</span>
+      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </summary>
+    <div class="accordion-body"><p>${f.a}</p></div>
+  </details>
+`).join('');
+
+/* LOCATION */
+document.getElementById('studio-address-text').textContent = ADDRESS;
+document.getElementById('parking-note-text').textContent   = PARKING_NOTE;
+
+const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+document.getElementById('hours-table').innerHTML = `<tbody>${HOURS.map(row => {
+  const closed  = row.hours.toLowerCase() === 'closed';
+  const isToday = row.day === today;
+  return `<tr class="${closed ? 'closed' : ''} ${isToday ? 'today' : ''}">
+    <td>${row.day}</td><td>${closed ? 'Closed' : row.hours}</td>
+  </tr>`;
+}).join('')}</tbody>`;
+
+/* CONTACT DETAILS */
+document.getElementById('contact-details').innerHTML = `
+  <a class="contact-link" href="tel:${CONTACT.phone}">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.338c0-1.04.849-2.088 1.875-2.088.347 0 .682.139.928.396l2.41 2.67a1.875 1.875 0 0 1 0 2.482L6.03 11.24a.375.375 0 0 0-.045.444A11.25 11.25 0 0 0 12.758 17.8a.375.375 0 0 0 .444-.045l1.432-1.44a1.875 1.875 0 0 1 2.483 0l2.67 2.41c.257.246.395.58.395.928 0 1.026-1.047 1.875-2.088 1.875C8.76 21.518 2.25 15.004 2.25 6.338Z"/></svg>
+    ${CONTACT.phone}
+  </a>
+  <a class="contact-link" href="mailto:${CONTACT.email}">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+    ${CONTACT.email}
+  </a>
+  <a class="contact-link" href="https://instagram.com/${CONTACT.instagram.replace('@','')}" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+    ${CONTACT.instagram}
+  </a>
+`;
+
+document.getElementById('social-row').innerHTML = `
+  <a class="social-btn" href="https://instagram.com/${CONTACT.instagram.replace('@','')}" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/></svg>
+  </a>
+  <a class="social-btn" href="https://facebook.com/${CONTACT.facebook.replace(/\s+/g,'')}" target="_blank" rel="noopener" aria-label="Follow us on Facebook">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+  </a>
+`;
+
+/* FOOTER */
+document.getElementById('footer-copyright').textContent = `© ${new Date().getFullYear()} ${STUDIO_NAME}. All rights reserved. · ${CITY_STATE}`;
+
+/* ================================================================
+   PAGE INTERACTIONS
+   ================================================================ */
+
+/* Sticky nav shadow on scroll */
+const nav = document.getElementById('site-nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+
+/* Mobile hamburger */
+const toggle  = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+toggle.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+navMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+});
+
+/* Scroll-reveal */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* Contact form — client-side demo only
+   To actually send messages, connect to Formspree, EmailJS, or Netlify Forms.
+   Replace the block below with your fetch() call to those services. */
+document.getElementById('contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'block';
+  e.target.reset();
+});
+</script>
+
+</body>
+</html>
