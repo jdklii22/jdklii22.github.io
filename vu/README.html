@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README — Vu Phan, Realtor® (White Theme Redesign)</title>
+  <style>
+    :root { --gold: #B8933F; --ink: #111110; --muted: #6B6860; --border: #E8E5DF; --bg: #FAFAF8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; padding: 48px 24px; }
+    .page { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 2rem; border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; margin: 32px 0 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 20px; }
+    p { color: var(--muted); margin-bottom: 10px; }
+    code { background: #F2F0EB; padding: 2px 7px; border-radius: 3px; font-size: 0.88em; color: var(--ink); font-family: 'Courier New', monospace; }
+    pre { background: var(--ink); color: #E8E5DF; padding: 20px; border-radius: 6px; overflow-x: auto; font-size: 0.875rem; line-height: 1.65; white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { background: var(--ink); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.05em; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
+    td:first-child { color: var(--ink); font-weight: 500; }
+    .badge { display: inline-block; background: var(--gold); color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+    .badge-new { background: #2D6A4F; }
+    ul { padding-left: 20px; color: var(--muted); }
+    li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>README — Vu Phan, Realtor® Website</h1>
+  <p style="color:var(--muted); margin-bottom:28px;"><span class="badge">v2.0 — White Theme Redesign</span> &nbsp; Saved in: <code>VU/claude/</code> &nbsp; Date: August 2026</p>
+
+  <div class="card">
+    <h2>Business Information</h2>
+    <table>
+      <tr><td>Name</td><td>Vu Phan, Realtor®</td></tr>
+      <tr><td>Brokerage</td><td>RE/MAX Access</td></tr>
+      <tr><td>Address</td><td>100 Spring Garden St, Philadelphia, PA 19123</td></tr>
+      <tr><td>Phone</td><td>215-713-6655</td></tr>
+      <tr><td>Google Business</td><td><a href="https://www.google.com/maps/place/Vu+Phan,+Realtor%C2%AE/@39.9594715,-75.1394882" target="_blank">Google Maps Profile →</a></td></tr>
+      <tr><td>Hero Image</td><td>AI-generated: luxury home exterior + Philadelphia skyline at twilight</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Design Changes in v2.0 (White Theme)</h2>
+    <table>
+      <tr><th>Element</th><th>v1 (VU/)</th><th>v2 — White Theme (VU/claude/)</th></tr>
+      <tr><td>Background</td><td>Dark navy sections</td><td>Pure white (#FFFFFF) throughout</td></tr>
+      <tr><td>Color Palette</td><td>Navy + Gold</td><td>Ink Black + Warm Gold (#B8933F) on white</td></tr>
+      <tr><td>Typography</td><td>Cinzel + Plus Jakarta Sans</td><td>Cormorant Garamond + Inter (more editorial)</td></tr>
+      <tr><td>Navbar</td><td>Fixed dark</td><td>Transparent over hero → crisp white on scroll</td></tr>
+      <tr><td>Stat Bar</td><td>Dark navy background</td><td>White with thin rule borders</td></tr>
+      <tr><td>Cards</td><td>Heavy shadow</td><td>Subtle 2px shadow + thin 1px border</td></tr>
+      <tr><td>Sections</td><td>Alternating dark/light</td><td>White, off-white (#FAFAF8), cream (#F5F3EE)</td></tr>
+      <tr><td>Hero text</td><td>Bold/heavy weight</td><td>Thin 300-weight serif headline</td></tr>
+      <tr><td>Animations</td><td>None</td><td>IntersectionObserver scroll-reveal on every section</td></tr>
+      <tr><td>Mobile nav</td><td>Hidden</td><td>Full-screen frosted-glass overlay</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>AI Prompt — Website Redesign (White Theme)</h2>
+    <pre>Redesign the existing "Vu Phan, Realtor®" one-page real estate website with a clean white background aesthetic.
+
+Design Requirements:
+- Primary background: Pure white (#FFFFFF)
+- Alternating section backgrounds: Off-white (#FAFAF8) and Cream (#F5F3EE)
+- Accent: Warm gold (#B8933F) for headings, icons, and call-to-action highlights
+- Text: Deep charcoal/ink (#111110) for headings, muted slate (#6B6860) for body
+- Dark sections: Reserved ONLY for Hero overlay, Valuation section, and Footer
+- Typography: Cormorant Garamond (serif, italic headings) + Inter (clean sans body)
+- Navbar: Fully transparent over hero image, transitions to white with blur backdrop on scroll
+- All cards: White background with 1px border and subtle 2-pixel shadow — no heavy drop shadows
+- Scroll animations: IntersectionObserver fade-up reveal on all major sections
+- Mobile: Full-screen frosted-glass hamburger nav overlay
+- Hero: Keep Philadelphia skyline image, reduce overlay opacity for lighter feel
+
+Maintain all existing functionality:
+- Neighborhood grid, filtered listings, valuation form, contact form
+- Google Business & Maps integration
+- All Vu Phan contact details unchanged
+</pre>
+  </div>
+
+  <div class="card">
+    <h2>File Changelog — VU/claude/</h2>
+    <table>
+      <tr><th>File</th><th>Status</th><th>Description</th></tr>
+      <tr><td><code>index.html</code></td><td><span class="badge badge-new">NEW</span></td><td>Restructured HTML with semantic BEM class naming, reveal classes, and mobile hamburger nav</td></tr>
+      <tr><td><code>style.css</code></td><td><span class="badge badge-new">NEW</span></td><td>Full white-theme design system with CSS custom properties, Cormorant Garamond typography, refined card styles, scroll animations</td></tr>
+      <tr><td><code>mobile-nav.css</code></td><td><span class="badge badge-new">NEW</span></td><td>Mobile hamburger full-screen overlay styles (separated for clarity)</td></tr>
+      <tr><td><code>script.js</code></td><td><span class="badge badge-new">NEW</span></td><td>Refactored JS: SITE_DATA config, IntersectionObserver reveal, smooth counter animation, listing filter, form handlers</td></tr>
+      <tr><td><code>philadelphia_hero.jpg</code></td><td><span class="badge">HERO</span></td><td>Reused AI-generated hero image from v1</td></tr>
+      <tr><td><code>vu_phan.jpg</code></td><td><span class="badge badge-new">NEW</span></td><td>High-resolution studio executive headshot of Vu Phan, Realtor® for the About section</td></tr>
+      <tr><td><code>spring_garden.jpg</code></td><td><span class="badge badge-new">NEW</span></td><td>AI-generated Spring Garden & Fairmount Victorian brownstone streetscape image</td></tr>
+      <tr><td><code>rittenhouse.jpg</code></td><td><span class="badge badge-new">NEW</span></td><td>AI-generated Rittenhouse Square park & high-rise condo architecture image</td></tr>
+      <tr><td><code>old_city.jpg</code></td><td><span class="badge badge-new">NEW</span></td><td>AI-generated historic Old City cobblestone & colonial rowhouse street image</td></tr>
+      <tr><td><code>fishtown.jpg</code></td><td><span class="badge badge-new">NEW</span></td><td>AI-generated modern Fishtown & Northern Liberties urban townhouse image</td></tr>
+      <tr><td><code>README.html</code></td><td><span class="badge badge-new">NEW</span></td><td>This documentation file</td></tr>
+      <tr><td><code>map.html</code></td><td><span class="badge badge-new">NEW</span></td><td>Project architecture map</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>How to Manage the Site</h2>
+    <ul>
+      <li><strong>Update listings:</strong> Edit the <code>SITE_DATA.listings</code> array in <code>script.js</code> — change prices, addresses, tags, or add new property objects.</li>
+      <li><strong>Update phone / address:</strong> Edit the top of <code>SITE_DATA</code> in <code>script.js</code> — all contact details cascade automatically.</li>
+      <li><strong>Change colors:</strong> Edit CSS custom properties (variables) at the top of <code>style.css</code> under <code>:root {}</code>.</li>
+      <li><strong>Deploy:</strong> Upload the entire <code>claude/</code> folder contents to GitHub Pages, Vercel, Netlify, or any web host.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

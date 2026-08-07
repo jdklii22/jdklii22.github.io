@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Map — Vu Phan, Realtor® (claude/)</title>
+  <style>
+    :root { --gold: #B8933F; --ink: #111110; --muted: #6B6860; --border: #E8E5DF; --bg: #FAFAF8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; padding: 48px 24px; }
+    .page { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 2rem; border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 8px; }
+    h2 { color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.82rem; font-weight: 700; margin: 28px 0 12px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 20px; }
+    p { color: var(--muted); margin-bottom: 10px; }
+    code { background: #F2F0EB; padding: 2px 7px; border-radius: 3px; font-size: 0.88em; color: var(--ink); font-family: monospace; }
+    .tree { font-family: 'Courier New', monospace; background: var(--ink); color: #C8C4BC; padding: 24px; border-radius: 8px; font-size: 0.875rem; line-height: 2; }
+    .tree .f { color: #fff; } .tree .c { color: var(--gold); } .tree .d { color: #888; font-size: 0.78rem; }
+    .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .flow-box { border: 1px solid var(--border); border-radius: 6px; padding: 16px; background: #fff; }
+    .flow-box h3 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); margin-bottom: 8px; }
+    .flow-box ul { padding-left: 16px; font-size: 0.85rem; color: var(--muted); }
+    .flow-box li { margin-bottom: 4px; }
+    .arrow { text-align: center; color: var(--gold); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Project Map — VU/claude/</h1>
+  <p style="margin-bottom:24px">Architecture, file hierarchy, and data flow for the Vu Phan, Realtor® white-theme redesign.</p>
+
+  <div class="card">
+    <h2>Directory Structure</h2>
+    <div class="tree">
+VU/<br>
+├── <span class="f">index.html</span> &nbsp;<span class="d">← v1 original (dark navy theme)</span><br>
+├── <span class="f">style.css</span> &nbsp;&nbsp;<span class="d">← v1 styles</span><br>
+├── <span class="f">script.js</span> &nbsp;&nbsp;<span class="d">← v1 logic</span><br>
+├── <span class="f">philadelphia_hero.jpg</span> <span class="d">← AI-generated hero image</span><br>
+├── <span class="f">README.html</span> <span class="d">← v1 documentation</span><br>
+├── <span class="f">map.html</span> &nbsp;&nbsp;<span class="d">← v1 project map</span><br>
+│<br>
+└── <span class="c">claude/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← ✦ WHITE THEME REDESIGN (v2)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">index.html</span> &nbsp;<span class="d">← Redesigned single-page site</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">style.css</span> &nbsp;&nbsp;<span class="d">← White-background design system</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">mobile-nav.css</span> <span class="d">← Mobile hamburger overlay</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">script.js</span> &nbsp;&nbsp;<span class="d">← SITE_DATA config + JS logic</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">philadelphia_hero.jpg</span> <span class="d">← Hero image</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f">README.html</span> <span class="d">← Documentation & changelogs</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="f">map.html</span> &nbsp;&nbsp;<span class="d">← This file</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Single-Page Section Layout</h2>
+    <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+      <thead><tr style="background:var(--ink); color:#fff;"><th style="padding:10px 14px; text-align:left;">Section</th><th style="padding:10px 14px; text-align:left;">ID / Element</th><th style="padding:10px 14px; text-align:left;">Background</th><th style="padding:10px 14px; text-align:left;">Key Features</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Navbar</strong></td><td style="padding:10px 14px"><code>#navbar</code></td><td style="padding:10px 14px">Transparent → White on scroll</td><td style="padding:10px 14px">Click-to-call, Google Profile link, mobile hamburger</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Hero</strong></td><td style="padding:10px 14px"><code>#hero</code></td><td style="padding:10px 14px">Dark overlay on hero image</td><td style="padding:10px 14px">Serif headline, CTA buttons, scroll hint animation</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Stats Strip</strong></td><td style="padding:10px 14px"><code>.stats-strip</code></td><td style="padding:10px 14px">White</td><td style="padding:10px 14px">4 animated counters with gold accent numbers</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>About</strong></td><td style="padding:10px 14px"><code>#about</code></td><td style="padding:10px 14px">White</td><td style="padding:10px 14px">2-col grid: photo + bio text, pillars list, CTA row</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Neighborhoods</strong></td><td style="padding:10px 14px"><code>#neighborhoods</code></td><td style="padding:10px 14px">Off-white (#FAFAF8)</td><td style="padding:10px 14px">4-col card grid with hover zoom & lift effects</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Listings</strong></td><td style="padding:10px 14px"><code>#listings</code></td><td style="padding:10px 14px">White</td><td style="padding:10px 14px">3-col filtered property grid, JS-driven render</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Valuation</strong></td><td style="padding:10px 14px"><code>#valuation</code></td><td style="padding:10px 14px">Dark (#141412)</td><td style="padding:10px 14px">2-col: value proposition + lead capture form</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Testimonials</strong></td><td style="padding:10px 14px"><code>.testimonials</code></td><td style="padding:10px 14px">Cream (#F5F3EE)</td><td style="padding:10px 14px">3-col review cards with Cormorant Garamond italic quotes</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><strong>Contact</strong></td><td style="padding:10px 14px"><code>#contact</code></td><td style="padding:10px 14px">White</td><td style="padding:10px 14px">2-col: office info + Google Map embed + contact form</td></tr>
+        <tr><td style="padding:10px 14px"><strong>Footer</strong></td><td style="padding:10px 14px"><code>.footer</code></td><td style="padding:10px 14px">Dark (#1C1B19)</td><td style="padding:10px 14px">Brand, address, nav links, copyright</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Data Flow — script.js</h2>
+    <div class="flow">
+      <div class="flow-box">
+        <h3>SITE_DATA Config</h3>
+        <ul>
+          <li>phone, address, googleUrl</li>
+          <li>listings[] array</li>
+          <li>stats[] (counters)</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flow-box">
+        <h3>Render Functions</h3>
+        <ul>
+          <li>renderListings(items)</li>
+          <li>applyFilters()</li>
+          <li>initCounters()</li>
+          <li>initReveal()</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flow-box">
+        <h3>DOM Output</h3>
+        <ul>
+          <li>#listingsGrid</li>
+          <li>.stat-chip__num</li>
+          <li>.reveal → .visible</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Color System — White Theme</h2>
+    <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+      <thead><tr style="background:var(--ink); color:#fff;"><th style="padding:10px 14px">Token</th><th style="padding:10px 14px">Value</th><th style="padding:10px 14px">Usage</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--white</code></td><td style="padding:10px 14px">#FFFFFF</td><td style="padding:10px 14px">Primary section backgrounds, cards</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--off-white</code></td><td style="padding:10px 14px">#FAFAF8</td><td style="padding:10px 14px">Alternating sections, filter bar</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--cream</code></td><td style="padding:10px 14px">#F5F3EE</td><td style="padding:10px 14px">Testimonials section background</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--gold-600</code></td><td style="padding:10px 14px">#B8933F</td><td style="padding:10px 14px">Eyebrows, icons, CTA accent, stat numbers</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--ink-900</code></td><td style="padding:10px 14px">#111110</td><td style="padding:10px 14px">Headings, primary buttons, footer</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 14px"><code>--ink-500</code></td><td style="padding:10px 14px">#6B6860</td><td style="padding:10px 14px">Body text</td></tr>
+        <tr><td style="padding:10px 14px"><code>--dark-bg</code></td><td style="padding:10px 14px">#141412</td><td style="padding:10px 14px">Valuation section & footer backgrounds</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

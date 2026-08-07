@@ -1,0 +1,29 @@
+/* Mobile Nav Menu — open state (appended to style.css scope via JS class toggle) */
+@media (max-width: 1024px) {
+  .nav-menu--open {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    z-index: 850;
+  }
+
+  .nav-menu--open .nav-link {
+    font-size: 1.2rem;
+    color: var(--ink-700) !important;
+    font-weight: 400;
+  }
+
+  .nav-menu--open .nav-link:hover {
+    color: var(--gold-600) !important;
+  }
+}
