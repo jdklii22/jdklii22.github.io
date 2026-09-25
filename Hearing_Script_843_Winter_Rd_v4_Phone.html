@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telephonic Hearing Script & Desk Cockpit (v4) — 843 Winter Rd</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --primary-accent: #2563eb;
+      --emerald: #059669;
+      --emerald-light: #ecfdf5;
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --rose: #e11d48;
+      --rose-light: #fff1f2;
+      --slate-text: #0f172a;
+      --muted: #475569;
+      --radius: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--slate-text);
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Header & Quick Timer */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+      color: #ffffff;
+      padding: 24px 28px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    .top-bar h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .top-bar p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+    .timer-widget {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .timer-display {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      min-width: 70px;
+      text-align: center;
+    }
+    .btn-timer {
+      background: #ffffff;
+      color: var(--primary);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-timer:hover { background: #f1f5f9; }
+
+    /* Navigation Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .tab-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #bfdbfe;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 8px;
+    }
+
+    /* Cockpit Grid */
+    .cockpit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .cockpit-cell {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .cockpit-cell .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .cockpit-cell .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate-text);
+      margin-top: 4px;
+    }
+    .cockpit-cell .highlight {
+      color: var(--primary-accent);
+    }
+    .cockpit-cell .subtext {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Verbal Speech Blocks */
+    .say-box {
+      background: #f0fdf4;
+      border-left: 5px solid var(--emerald);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #064e3b;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .say-box strong {
+      color: #064e3b;
+    }
+
+    /* Cue callout */
+    .verbal-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .warning-box {
+      background: var(--amber-light);
+      border-left: 5px solid var(--amber);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      color: #78350f;
+    }
+
+    /* Checklists */
+    .checklist {
+      list-style: none;
+      margin: 12px 0;
+    }
+    .checklist li {
+      padding: 8px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.92rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    /* Q&A Accordion */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    summary {
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      background: #f8fafc;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    summary:hover {
+      background: #f1f5f9;
+    }
+    details[open] summary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-bottom: 1px solid #bfdbfe;
+    }
+    .qa-content {
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 12px;
+    }
+    th {
+      background: #f8fafc;
+      color: var(--slate-text);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:nth-child(even) td { background: #fafaf9; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-green { background: var(--emerald-light); color: var(--emerald); }
+    .badge-amber { background: var(--amber-light); color: var(--amber); }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .container { max-width: 100%; }
+      .top-bar { background: none; color: #000; padding: 0; box-shadow: none; border-bottom: 2px solid #000; }
+      .timer-widget, .tab-bar, .btn-timer { display: none; }
+      .section-card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+      .say-box { background: #f9f9f9; color: #000; border-left: 4px solid #333; }
+      details { border: 1px solid #ddd; }
+      details[open] summary { background: #eee; color: #000; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Top Bar with Live Stopwatch -->
+  <div class="top-bar">
+    <div>
+      <h1>Telephonic Hearing Desk Cockpit (v4)</h1>
+      <p>Montgomery County Board of Assessment Appeals · 843 Winter Rd, Rydal PA 19046 · Parcel 30-00-72988-00-8</p>
+    </div>
+    <div class="timer-widget">
+      <div>
+        <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8;">Hearing Timer</div>
+        <div class="timer-display" id="time-display">00:00</div>
+      </div>
+      <button class="btn-timer" id="timer-toggle-btn" onclick="toggleTimer()">Start</button>
+      <button class="btn-timer" style="background: rgba(255,255,255,0.2); color: #fff;" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Navigation Quick Tabs -->
+  <div class="tab-bar">
+    <a href="#cockpit" class="tab-btn active">📊 Cockpit Numbers</a>
+    <a href="#prep-checklist" class="tab-btn">📋 Desk Setup & Audio</a>
+    <a href="#track-a" class="tab-btn">⚡ Track A: 90-Sec Pitch</a>
+    <a href="#track-b" class="tab-btn">🎙️ Track B: Full 4-Min Script</a>
+    <a href="#rules" class="tab-btn">⏱️ 2-Second Rule & Decorum</a>
+    <a href="#rebuttals" class="tab-btn">🛡️ Phone Q&amp;A Rebuttals</a>
+    <a href="#outcomes" class="tab-btn">💰 Outcome Benchmark</a>
+  </div>
+
+  <!-- Section 1: Cockpit Numbers -->
+  <div class="section-card" id="cockpit">
+    <h2>📊 The Desk Cockpit: Instant Reference Table</h2>
+    <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 14px;">Keep this visible at all times. You do not need to hunt through papers for these figures:</p>
+    
+    <div class="cockpit-grid">
+      <div class="cockpit-cell">
+        <div class="label">Current Assessed Value</div>
+        <div class="value">$369,690</div>
+        <div class="subtext">From County Assessment Roll</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">June 9, 2023 Purchase</div>
+        <div class="value highlight">$989,000</div>
+        <div class="subtext">ALTA Statement (Exhibit C, p. 4)</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">Applicable CLR (2026–27)</div>
+        <div class="value">29.8%</div>
+        <div class="subtext">Factor 3.36 (Exhibit E, PA STEB)</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">Requested Assessed Value</div>
+        <div class="value highlight">$294,722</div>
+        <div class="subtext">$989,000 × 29.8% (Exhibit B)</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">Requested Reduction</div>
+        <div class="value" style="color: var(--emerald);">$74,968</div>
+        <div class="subtext">$369,690 − $294,722</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">FMV Implied by Current Assmt</div>
+        <div class="value" style="color: var(--rose);">$1,240,570</div>
+        <div class="subtext">$369,690 ÷ 29.8% (Over-assessed)</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">Living Area Breakdown</div>
+        <div class="value">4,275 + 1,800</div>
+        <div class="subtext">4,275 above-grade + 1,800 bsmt = 6,075 tot.</div>
+      </div>
+      <div class="cockpit-cell">
+        <div class="label">Annual Tax Savings</div>
+        <div class="value">~$4,003 / yr</div>
+        <div class="subtext">At ~53.4 mills (Abington Twp/SD/Cty)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Pre-Call Checklist -->
+  <div class="section-card" id="prep-checklist">
+    <h2>📋 Pre-Call Checklist &amp; "Zero-Shuffle" Desk Setup</h2>
+    
+    <div class="warning-box">
+      ⚠️ <strong>Microphone Warning:</strong> Paper shuffling directly next to a phone mic sounds excruciating to Board members on a conference bridge. <strong>Spread your key exhibits flat across your desk</strong> in a semicircle so you never flip pages while speaking!
+    </div>
+
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" id="c1">
+        <label for="c1"><strong>Audio Connection:</strong> Use a wired headset or AirPods (avoid speakerphone echo). Ensure phone battery is 80%+ and Do Not Disturb is activated.</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c2">
+        <label for="c2"><strong>Desk Layout (Left to Right):</strong> Exhibit C (ALTA Statement) on left, Parcel Record (Exhibit D) middle-left, This Screen / Script center, CLR publication (Exhibit E) right, Comps spreadsheet (Exhibit G) far right.</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c3">
+        <label for="c3"><strong>Notepad Ready:</strong> Have a pen and clean notepad ready to write the names of the Board Chair, County Assessor, and School District Solicitor.</label>
+      </li>
+      <li>
+        <input type="checkbox" id="c4">
+        <label for="c4"><strong>Dial-in / Call Window:</strong> If dial-in: connect 2–3 minutes early, mute immediately. If they call you: keep phone line completely free starting 10 minutes prior.</label>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Section 3: Connection & Oath -->
+  <div class="section-card">
+    <h2>📞 Step-by-Step Connection &amp; Taking the Oath</h2>
+    
+    <p><strong>1. Audio Check &amp; Roll Call Greeting:</strong></p>
+    <div class="say-box">
+      "Good [morning/afternoon]. My name is John Yam. I am a co-trustee of the JT Winter Road Trust and resident of 843 Winter Road, parcel 30-00-72988-00-8. Can the Board hear me clearly?"
+    </div>
+
+    <p><strong>2. Verbal Oath Administration:</strong></p>
+    <p style="font-size:0.9rem; color:var(--muted); margin: 6px 0;">When the Chair asks: <em>"Do you swear or affirm that your testimony will be the truth, the whole truth, and nothing but the truth?"</em></p>
+    <div class="say-box" style="padding: 10px 16px;">
+      "I do."
+    </div>
+
+    <p><strong>3. Vital Phone Step — Packet Alignment:</strong></p>
+    <div class="say-box">
+      "Before I begin, may I confirm that the Board members have my timely submitted evidence packet in front of you?"
+    </div>
+  </div>
+
+  <!-- Section 4: Track A -->
+  <div class="section-card" id="track-a">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2>⚡ Track A: The 90-Second Fast Pitch</h2>
+      <span class="badge badge-primary">Use when time is short</span>
+    </div>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">Deliver this if the Board asks for a brief summary or appears to be moving quickly:</p>
+
+    <div class="say-box">
+      "Thank you, members of the Board. I will be very brief.<br><br>
+      This appeal concerns parcel <strong>30-00-72988-00-8</strong> at 843 Winter Road in Rydal. The current assessed value is <strong>$369,690</strong>.<br><br>
+      My opinion of fair market value as of the filing date is <strong>$989,000</strong>. Applying Montgomery County's official Common Level Ratio of <strong>29.8%</strong>, I respectfully request that the assessed value be reduced to <strong>$294,722</strong>.<br><br>
+      This request rests on three straightforward facts:<br><br>
+      <strong>1. An arm's-length market purchase:</strong> I purchased this home as co-trustee in a fully arm's-length sale that settled on June 9, 2023, for exactly $989,000, as documented on the ALTA settlement statement in Exhibit C.<br><br>
+      <strong>2. Substantially unchanged condition:</strong> No additions or structural renovations have occurred since that purchase. The property is in substantially the same physical condition, subject to normal aging.<br><br>
+      <strong>3. Current assessment imbalance:</strong> Under the County's 29.8% CLR, the current assessment implies a market value of over $1.24 million—more than $251,000 above what the open market established.<br><br>
+      I respectfully ask the Board to determine fair market value at $989,000 and apply the 29.8% CLR to establish an assessed value of $294,722. I am happy to answer any questions."
+    </div>
+  </div>
+
+  <!-- Section 5: Track B -->
+  <div class="section-card" id="track-b">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2>🎙️ Track B: The Full 3-to-4 Minute Presentation</h2>
+      <span class="badge badge-green">Standard Oral Presentation</span>
+    </div>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">Use this when given the floor to present your case fully. Always use the <strong>verbal signposts</strong> to guide their eyes:</p>
+
+    <p><strong>Part 1 — Introduction &amp; Relief Requested (45 sec):</strong></p>
+    <div class="say-box">
+      "Good [morning/afternoon], members of the Board. My name is John Yam. I am a co-trustee of the JT Winter Road Trust, record owner of 843 Winter Road in Rydal, and I reside at the property. This appeal concerns parcel 30-00-72988-00-8. The current assessed value is $369,690.<br><br>
+      My opinion of fair market value as of the July 2026 filing date is <strong>$989,000</strong>. Based on that value, I respectfully request that the Board apply Montgomery County's published Common Level Ratio of <strong>29.8%</strong> and establish an assessed value of <strong>$294,722</strong>, which represents a reduction of $74,968. If the Board finds a different fair market value, I respectfully request that it apply the same 29.8% ratio to that determined value."
+    </div>
+
+    <div class="verbal-cue">📞 Verbal Signpost: Direct Board to Exhibit C</div>
+    <p><strong>Part 2 — Subject Property Sale Evidence (60 sec):</strong></p>
+    <div class="say-box">
+      <em>"If the Board would please turn to <strong>Exhibit C on page 4</strong> of the packet..."</em> [Pause 3 seconds]<br><br>
+      "Exhibit C includes the Final ALTA Settlement Statement. I purchased the property as co-trustee in an arm's-length transaction that settled on June 9, 2023, for $989,000. The deed was recorded on June 23, 2023.<br><br>
+      The seller was unrelated to us, both parties acted voluntarily, and there were no unusual conditions, seller concessions, or personal property allocations distorting that price.<br><br>
+      Since settlement, there have been no additions or major renovations. While I recognize that the purchase occurred three years prior to the filing date and is not legally conclusive by itself, it represents the most direct, arm's-length evidence of what buyers and sellers in the open market actually paid for this specific property."
+    </div>
+
+    <div class="verbal-cue">📞 Verbal Signpost: Direct Board to Exhibit D</div>
+    <p><strong>Part 3 — Square Footage &amp; Condition Reconciliation (45 sec):</strong></p>
+    <div class="say-box">
+      <em>"If the Board looks at the property record in <strong>Exhibit D</strong>..."</em> [Pause 2 seconds]<br><br>
+      "I want to clarify the living area so that it is properly understood. The property has approximately <strong>4,275 square feet of above-grade living area</strong>, plus approximately <strong>1,800 finished square feet in the basement</strong>, totaling approximately 6,075 finished square feet.<br><br>
+      When comparing this property to other sales in Abington Township, it is vital to distinguish above-grade gross living area from finished basement space to ensure an apples-to-apples comparison."
+    </div>
+
+    <div class="verbal-cue">📞 Verbal Signpost: Direct Board to Exhibit A &amp; B</div>
+    <p><strong>Part 4 — Market Context &amp; Over-Valuation (45 sec):</strong></p>
+    <div class="say-box">
+      <em>"Turning to the summary in <strong>Exhibit A and Exhibit B</strong>..."</em> [Pause 2 seconds]<br><br>
+      "Under the applicable 29.8% Common Level Ratio, the County's current assessment of $369,690 implies a fair market value of approximately <strong>$1,240,570</strong>.<br><br>
+      That implied valuation is more than $251,000 higher than what this home sold for in the open market. Even looking at large homes sold recently in the 19046 zip code—such as the comparable sales submitted in Exhibits G and H—the market evidence supports our $989,000 purchase price rather than the $1.24 million implied by the assessment roll."
+    </div>
+
+    <div class="verbal-cue">📞 Verbal Signpost: Direct Board to Exhibit E</div>
+    <p><strong>Part 5 — CLR Application &amp; Closing (30 sec):</strong></p>
+    <div class="say-box">
+      <em>"Finally, <strong>Exhibit E</strong> provides the official State Tax Equalization Board publication..."</em> [Pause 2 seconds]<br><br>
+      "STEB published the Montgomery County Common Level Ratio at <strong>29.8%</strong>, effective for the July 1, 2026 to June 30, 2027 tax period.<br><br>
+      Under Pennsylvania law, the Board determines fair market value and then applies the applicable Common Level Ratio. Multiplying $989,000 by 29.8% produces an assessed value of <strong>$294,722</strong>.<br><br>
+      For these reasons, I respectfully request that the Board set fair market value at $989,000 and reduce the assessed value to $294,722 for tax year 2027. Thank you. I am ready for any questions the Board or County may have."
+    </div>
+  </div>
+
+  <!-- Section 6: Phone Rules -->
+  <div class="section-card" id="rules">
+    <h2>⏱️ Critical Phone Etiquette: The 2-Second Rule</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:14px;">
+        <strong style="color:var(--primary);">1. The 2-Second Pause</strong>
+        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">Audio latency on teleconferences is real. When someone finishes a sentence, silently count <em>"one-one-thousand, two-one-thousand"</em> before answering to ensure you don't talk over them.</p>
+      </div>
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:14px;">
+        <strong style="color:var(--primary);">2. Never Speak Over Panel</strong>
+        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">If a Board member interrupts you, stop talking instantly. Yield politely: <em>"Please go ahead, sir/ma'am."</em></p>
+      </div>
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:14px;">
+        <strong style="color:var(--primary);">3. Embrace Phone Silence</strong>
+        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">A 5-second silence usually means they are reading your ALTA statement or writing notes. Do not rush to fill it with nervous words.</p>
+      </div>
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:14px;">
+        <strong style="color:var(--primary);">4. Identify the Speaker</strong>
+        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">If a new voice questions you: <em>"Thank you. May I confirm who asked that question so I can address you properly?"</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7: Q&A Rebuttals -->
+  <div class="section-card" id="rebuttals">
+    <h2>🛡️ Telephonic Q&amp;A &amp; Rebuttal Guide (Click to Expand)</h2>
+
+    <details open>
+      <summary>Q1: "A 2023 sale was three years ago. Why should that dictate value in 2026?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "I completely understand that a prior sale is not legally conclusive and that the valuation date is the July 2026 filing date. However, an actual arm's-length sale of the subject property itself is highly relevant direct evidence.<br><br>
+          Because there have been no major improvements or structural renovations since that purchase, the physical property remains substantially identical. I offer the $989,000 sale together with the condition of the home and our submitted market context as the best available evidence of fair market value."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q2: (From Assessor or School District) "Home values in Abington have increased since 2023. Hasn't this property appreciated?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "While general regional indices may show appreciation across lower- and median-priced homes in Abington, luxury and custom homes in the million-dollar range do not track general township medians.<br><br>
+          Furthermore, under Pennsylvania law, the assessment must be grounded in specific market evidence for this property. If the County or District has documented comparable sales of similar homes supporting a higher valuation, I welcome their evidence, but general inflation assumptions should not displace the documented $989,000 market transaction."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q3: "Did you make any renovations, additions, or major upgrades since June 2023?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this (if true):</strong></p>
+        <blockquote class="say-box">
+          "No. There have been no additions, structural expansions, or major renovations since settlement. We have performed ordinary maintenance and repairs, but the property remains substantially as it was when purchased."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q4: "Why did you not provide a formal certified appraisal?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "As a homeowner appearing pro se on behalf of our family trust, I relied on the documented arm's-length purchase price of the subject property itself, supported by the parcel records, settlement statement, and comparable area sales.<br><br>
+          Under Pennsylvania law, an owner is competent to testify to the value of their property, and an actual arm's-length sale is direct evidence of market value."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q5: "What about recent sales on nearby streets that sold over $1.2 million?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "I am aware that there are higher-priced sales in Rydal and Abington. However, those sales reflect properties with different lot topographies, different ages, newer construction, or superior finishes and amenities.<br><br>
+          The evidence submitted in our packet—such as the recent sales on Pondview Road and Lenox Road—demonstrates that homes of this substantial size in our area have traded between $140 and $167 per square foot. Our $989,000 purchase price at approximately $163 per square foot is entirely consistent with that market reality."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q6: "The parcel card shows 6,075 square feet. Why are you emphasizing 4,275 square feet?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "Because standard appraisal practice and MLS listings treat above-grade gross living area differently from finished basement area.<br><br>
+          843 Winter Road has approximately 4,275 square feet on the first and second floors, with approximately 1,800 square feet of finished space in the lower level. Comparing 6,075 total square feet to homes that have 5,500 square feet entirely above grade would distort the valuation. Both figures are valid, but they must be applied consistently."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q7: "What authority do you have to speak on behalf of the JT Winter Road Trust?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "I am a named co-trustee of the JT Winter Road Trust, which is the record owner of the property, and I reside at the home. My trustee status is reflected on the ALTA settlement statement and the recorded deed. I am appearing directly in my capacity as co-trustee."
+        </blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary>Q8: "What if the Board finds a fair market value higher than $989,000, say $1,050,000 or $1,100,000?"</summary>
+      <div class="qa-content">
+        <p><strong>Say this:</strong></p>
+        <blockquote class="say-box">
+          "My opinion of value based on our purchase and condition remains $989,000. However, if the Board determines a different fair market value from the evidence, I respectfully request that the Board apply the statutory 29.8% Common Level Ratio to whatever fair market value it determines."
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Section 8: Outcome Table -->
+  <div class="section-card" id="outcomes">
+    <h2>💰 Outcome Benchmark Table</h2>
+    <p style="font-size:0.9rem; color:var(--muted);">Private reference guide — the Board typically mails the decision within 30 to 45 days (legally by Nov 15):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Board-Determined FMV</th>
+          <th>Assessment at 29.8%</th>
+          <th>Assessment Reduction</th>
+          <th>Est. Annual Tax Savings*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#ecfdf5; font-weight:700;">
+          <td>$989,000 (Full Request)</td>
+          <td>$294,722</td>
+          <td>$74,968</td>
+          <td>~$4,003 / yr</td>
+        </tr>
+        <tr>
+          <td>$1,050,000</td>
+          <td>$312,900</td>
+          <td>$56,790</td>
+          <td>~$3,032 / yr</td>
+        </tr>
+        <tr>
+          <td>$1,100,000</td>
+          <td>$327,800</td>
+          <td>$41,890</td>
+          <td>~$2,237 / yr</td>
+        </tr>
+        <tr>
+          <td>$1,150,000</td>
+          <td>$342,700</td>
+          <td>$26,990</td>
+          <td>~$1,441 / yr</td>
+        </tr>
+        <tr>
+          <td>$1,200,000</td>
+          <td>$357,600</td>
+          <td>$12,090</td>
+          <td>~$646 / yr</td>
+        </tr>
+        <tr style="color:var(--muted);">
+          <td>$1,240,570 (Current Implied)</td>
+          <td>$369,690</td>
+          <td>$0</td>
+          <td>$0 / yr</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.75rem; color:var(--muted); margin-top:8px;">*Estimated using ~53.396 combined mills (County, Abington Township, Abington School District). Private calculation only; do not discuss tax savings amounts during the hearing.</p>
+  </div>
+
+</div>
+
+<script>
+  let timerInterval = null;
+  let elapsedSeconds = 0;
+  let isRunning = false;
+
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('timer-toggle-btn');
+    if (!isRunning) {
+      isRunning = true;
+      btn.innerText = 'Pause';
+      btn.style.background = '#fef08a';
+      btn.style.color = '#854d0e';
+      timerInterval = setInterval(() => {
+        elapsedSeconds++;
+        document.getElementById('time-display').innerText = formatTime(elapsedSeconds);
+      }, 1000);
+    } else {
+      isRunning = false;
+      btn.innerText = 'Resume';
+      btn.style.background = '#ffffff';
+      btn.style.color = 'var(--primary)';
+      clearInterval(timerInterval);
+    }
+  }
+
+  function resetTimer() {
+    isRunning = false;
+    clearInterval(timerInterval);
+    elapsedSeconds = 0;
+    document.getElementById('time-display').innerText = '00:00';
+    const btn = document.getElementById('timer-toggle-btn');
+    btn.innerText = 'Start';
+    btn.style.background = '#ffffff';
+    btn.style.color = 'var(--primary)';
+  }
+</script>
+</body>
+</html>
