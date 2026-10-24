@@ -7,7 +7,7 @@
   <!-- ============================================================
        SEO META — edit the title, description, and keywords below
        ============================================================ -->
-  <title>NA Beauty Bar | Luxury Lash Extension &amp; Brow Studio in Morrisville, PA</title>
+  <title>NA Beauty Bar | Before &amp; After Transformations · Lash &amp; Brow Studio in Morrisville, PA</title>
   <meta name="description" content="NA Beauty Bar is a boutique lash extension and brow studio in Morrisville, PA (229 Plaza Blvd, Unit 26). Offering classic, hybrid, and volume lash extensions, lash lifts, brow lamination, shaping, and tinting." />
   <meta name="keywords" content="NA Beauty Bar, lash extensions Morrisville PA, brow studio Morrisville PA, lash lift, brow lamination, volume lashes, Morrisville PA lash bar" />
   <meta property="og:title" content="NA Beauty Bar — Lash &amp; Brow Artistry" />
@@ -733,6 +733,12 @@
       border-radius: 0.75rem;
       aspect-ratio: 3/4;
       background: var(--cream-mid);
+      box-shadow: 0 4px 18px hsl(25 8% 18% / 0.05);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-item:hover {
+      box-shadow: 0 10px 30px hsl(25 8% 18% / 0.12);
+      transform: translateY(-2px);
     }
     .gallery-btn {
       position: absolute;
@@ -743,14 +749,121 @@
       border: none;
       cursor: pointer;
       padding: 0;
+      display: block;
     }
-    .gallery-btn img {
+
+    /* Before/After Dual Image Layering */
+    .img-before {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s var(--ease-out);
+      z-index: 1;
+      transform: scale(1);
+      transition: transform 0.6s var(--ease-out);
     }
-    .gallery-item:hover .gallery-btn img { transform: scale(1.05); }
+    .img-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.45s ease, transform 0.6s var(--ease-out);
+    }
+
+    /* On Hover & Active Mobile Tap: reveal Before image */
+    .gallery-item.has-before:hover .img-after,
+    .gallery-item.has-before.show-before .img-after {
+      opacity: 0;
+    }
+    .gallery-item.has-before:hover .img-before,
+    .gallery-item.has-before.show-before .img-before {
+      transform: scale(1.04);
+    }
+    .gallery-item:not(.has-before):hover .img-after {
+      transform: scale(1.04);
+    }
+
+    /* Interactive Before/After Badge Pill */
+    .ba-pill {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.28rem 0.7rem;
+      border-radius: 2rem;
+      background: hsl(25 8% 18% / 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid hsl(38 30% 96% / 0.22);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .ba-pill-state { transition: color 0.3s ease; }
+    .ba-after { color: #E2C799; font-weight: 700; }
+    .ba-before { color: var(--white); display: none; }
+    .ba-pill-hint {
+      font-size: 0.6rem;
+      opacity: 0.75;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      padding-left: 0.25rem;
+      border-left: 1px solid hsl(38 30% 96% / 0.2);
+    }
+
+    /* Hover Badge Transformation */
+    .gallery-item.has-before:hover .ba-pill,
+    .gallery-item.has-before.show-before .ba-pill {
+      background: hsl(16 48% 38% / 0.92);
+      border-color: hsl(41 52% 82% / 0.6);
+      box-shadow: 0 4px 14px hsl(16 48% 38% / 0.3);
+    }
+    .gallery-item.has-before:hover .ba-after,
+    .gallery-item.has-before.show-before .ba-after {
+      display: none;
+    }
+    .gallery-item.has-before:hover .ba-before,
+    .gallery-item.has-before.show-before .ba-before {
+      display: inline;
+      color: #FFF;
+      font-weight: 700;
+    }
+    .gallery-item.has-before:hover .ba-pill-hint,
+    .gallery-item.has-before.show-before .ba-pill-hint {
+      display: none;
+    }
+
+    /* Single image badge (e.g. Studio Space) */
+    .single-pill {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 4;
+      padding: 0.25rem 0.65rem;
+      border-radius: 2rem;
+      background: hsl(25 8% 18% / 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: hsl(38 30% 96% / 0.9);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid hsl(38 30% 96% / 0.18);
+      pointer-events: none;
+    }
 
     .gallery-overlay {
       position: absolute;
@@ -761,8 +874,9 @@
       justify-content: center;
       transition: background 0.3s;
       pointer-events: none;
+      z-index: 3;
     }
-    .gallery-item:hover .gallery-overlay { background: hsl(25 8% 8% / 0.3); }
+    .gallery-item:hover .gallery-overlay { background: hsl(25 8% 8% / 0.22); }
     .gallery-overlay svg {
       opacity: 0;
       color: var(--white);
@@ -775,8 +889,8 @@
       position: absolute;
       bottom: 0;
       left: 0; right: 0;
-      padding: 1rem 0.75rem 0.75rem;
-      background: linear-gradient(transparent, hsl(25 8% 8% / 0.6));
+      padding: 1.2rem 0.85rem 0.75rem;
+      background: linear-gradient(transparent, hsl(25 8% 8% / 0.75));
       color: var(--white);
       font-size: 0.75rem;
       letter-spacing: 0.06em;
@@ -784,8 +898,14 @@
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     .gallery-item:hover .gallery-caption { opacity: 1; }
+    .caption-title { font-weight: 600; color: #FFF; font-size: 0.78rem; }
+    .caption-sub { font-size: 0.65rem; color: #E2C799; text-transform: none; letter-spacing: 0.02em; }
 
     /* Lightbox dialog */
     #lightbox {
@@ -827,10 +947,58 @@
       max-width: min(90vw, 820px);
       max-height: 90dvh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    #lightbox-img { max-width: 100%; max-height: 88dvh; border-radius: 0.75rem; object-fit: contain; box-shadow: 0 24px 80px hsl(25 8% 5% / 0.7); }
+    .lightbox-img-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+    }
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 76dvh;
+      border-radius: 0.75rem;
+      object-fit: contain;
+      box-shadow: 0 24px 80px hsl(25 8% 5% / 0.7);
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    /* Lightbox Before / After Switcher */
+    .lb-ba-bar {
+      margin-top: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: hsl(25 8% 18% / 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0.3rem 0.4rem;
+      border-radius: 2rem;
+      border: 1px solid hsl(38 30% 96% / 0.2);
+    }
+    .lb-ba-toggle-btn {
+      padding: 0.35rem 1rem;
+      border-radius: 1.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: hsl(38 30% 96% / 0.8);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lb-ba-toggle-btn:hover { color: var(--white); }
+    .lb-ba-toggle-btn.active {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 2px 8px hsl(16 48% 38% / 0.4);
+    }
     .lightbox-btn {
       position: absolute;
       top: 50%;
@@ -1254,20 +1422,29 @@
     <span class="watermark wm-gallery" aria-hidden="true">lashes</span>
 
     <div class="section-intro text-center reveal">
-      <p class="eyebrow">Portfolio</p>
-      <h2 id="gallery-heading">Our Work</h2>
-      <p>Every set is customized to enhance your unique features. Browse our portfolio for inspiration — then book your appointment!</p>
+      <p class="eyebrow">Portfolio &amp; Transformations</p>
+      <h2 id="gallery-heading">Before &amp; After Artistry</h2>
+      <p>Hover over any service photo (or tap on phone) to reveal the client's natural before look. Click any image to view in high resolution.</p>
     </div>
     <div class="gallery-grid reveal" id="gallery-grid" role="list"></div>
   </section>
 
-  <!-- Lightbox dialog — keyboard + click navigable, native <dialog> -->
+  <!-- Lightbox dialog — keyboard + click navigable, with Before/After Switcher -->
   <dialog id="lightbox" aria-label="Image lightbox" aria-modal="true">
     <div class="lightbox-inner">
       <button id="lb-close" aria-label="Close lightbox">&#x2715;</button>
       <button id="lb-prev" class="lightbox-btn" aria-label="Previous image">&#8592;</button>
-      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="" />
+      </div>
       <button id="lb-next" class="lightbox-btn" aria-label="Next image">&#8594;</button>
+      
+      <!-- Interactive Before / After view toggle in lightbox -->
+      <div class="lb-ba-bar" id="lb-ba-bar" role="group" aria-label="Transformation view options">
+        <button type="button" class="lb-ba-toggle-btn" id="lb-btn-before">Before</button>
+        <button type="button" class="lb-ba-toggle-btn active" id="lb-btn-after">After (Result)</button>
+      </div>
+
       <p id="lb-caption" aria-live="polite"></p>
     </div>
   </dialog>
@@ -1554,15 +1731,67 @@ const SERVICES = [
    Keep the caption short — it shows in the lightbox.
    ================================================================ */
 const GALLERY_IMAGES = [
-  { src: 'gallery_classic_lashes_1786049883404.jpg',  alt: 'Classic lash extensions — natural, wispy, defined',     caption: 'Classic Lash Extensions' },
-  { src: 'gallery_volume_lashes_1786049890499.jpg',   alt: 'Volume lash extensions — full, fluffy, glamorous',       caption: 'Volume Lash Extensions'  },
-  { src: 'gallery_brow_lamination_1786049897475.jpg', alt: 'Brow lamination — brushed up, full, natural',             caption: 'Brow Lamination'         },
-  { src: 'gallery_lash_lift_1786049904325.jpg',       alt: 'Lash lift and tint — naturally curled, tinted',           caption: 'Lash Lift & Tint'        },
-  { src: 'gallery_hybrid_lashes_1786049911241.jpg',   alt: 'Hybrid lash extensions — mix of classic and volume',      caption: 'Hybrid Lash Extensions'  },
-  { src: 'gallery_brow_tint_1786049918346.jpg',       alt: 'Brow tint — defined, arched, sculpted brows',             caption: 'Brow Shape & Tint'       },
-  { src: 'gallery_mega_volume_1786049936636.jpg',     alt: 'Mega volume lash extensions — bold, dramatic, full',       caption: 'Mega Volume Lashes'      },
-  { src: 'gallery_studio_ambiance_1786049952157.jpg', alt: 'Warm, elegant boutique lash studio interior',              caption: 'Our Studio Space'        },
-  { src: 'gallery_brow_shape_1786049943583.jpg',      alt: 'Lash artist applying professional brow treatment',         caption: 'In the Studio'           },
+  {
+    src: 'gallery_classic_lashes_1786049883404.jpg',
+    beforeSrc: 'before_classic_lashes.jpg',
+    alt: 'Classic lash extensions — natural, wispy, defined',
+    caption: 'Classic Lash Extensions',
+    badge: 'Classic'
+  },
+  {
+    src: 'gallery_volume_lashes_1786049890499.jpg',
+    beforeSrc: 'before_volume_lashes.jpg',
+    alt: 'Volume lash extensions — full, fluffy, glamorous',
+    caption: 'Volume Lash Extensions',
+    badge: 'Volume'
+  },
+  {
+    src: 'gallery_brow_lamination_1786049897475.jpg',
+    beforeSrc: 'before_brow_lamination.jpg',
+    alt: 'Brow lamination — brushed up, full, natural',
+    caption: 'Brow Lamination',
+    badge: 'Brows'
+  },
+  {
+    src: 'gallery_lash_lift_1786049904325.jpg',
+    beforeSrc: 'before_lash_lift.jpg',
+    alt: 'Lash lift and tint — naturally curled, tinted',
+    caption: 'Lash Lift & Tint',
+    badge: 'Lash Lift'
+  },
+  {
+    src: 'gallery_hybrid_lashes_1786049911241.jpg',
+    beforeSrc: 'before_hybrid_lashes.jpg',
+    alt: 'Hybrid lash extensions — mix of classic and volume',
+    caption: 'Hybrid Lash Extensions',
+    badge: 'Hybrid'
+  },
+  {
+    src: 'gallery_brow_tint_1786049918346.jpg',
+    beforeSrc: 'before_brow_tint.jpg',
+    alt: 'Brow tint — defined, arched, sculpted brows',
+    caption: 'Brow Shape & Tint',
+    badge: 'Brows'
+  },
+  {
+    src: 'gallery_mega_volume_1786049936636.jpg',
+    beforeSrc: 'before_mega_volume.jpg',
+    alt: 'Mega volume lash extensions — bold, dramatic, full',
+    caption: 'Mega Volume Lashes',
+    badge: 'Mega Volume'
+  },
+  {
+    src: 'gallery_studio_ambiance_1786049952157.jpg',
+    alt: 'Warm, elegant boutique lash studio interior',
+    caption: 'Our Studio Space',
+    badge: 'Studio'
+  },
+  {
+    src: 'gallery_brow_shape_1786049943583.jpg',
+    alt: 'Lash artist applying professional brow treatment',
+    caption: 'In the Studio',
+    badge: 'Atelier'
+  },
 ];
 
 /* ================================================================
@@ -1739,32 +1968,84 @@ document.getElementById('services-container').innerHTML = SERVICES.map(cat => `
   </div>
 `).join('');
 
-/* GALLERY */
-document.getElementById('gallery-grid').innerHTML = GALLERY_IMAGES.map((img, i) => `
-  <div class="gallery-item" role="listitem">
-    <button class="gallery-btn" aria-label="Open ${img.caption} in lightbox" data-index="${i}">
-      <img src="${img.src}" alt="${img.alt}" loading="lazy" />
-      <div class="gallery-overlay">
-        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/>
-        </svg>
-      </div>
-      <span class="gallery-caption">${img.caption}</span>
-    </button>
-  </div>
-`).join('');
+/* GALLERY (With Interactive Before/After Hover & Touch) */
+document.getElementById('gallery-grid').innerHTML = GALLERY_IMAGES.map((img, i) => {
+  const hasBefore = Boolean(img.beforeSrc);
+  return `
+    <div class="gallery-item ${hasBefore ? 'has-before' : ''}" role="listitem">
+      <button class="gallery-btn" aria-label="Open ${img.caption} ${hasBefore ? 'Before & After' : ''} in lightbox" data-index="${i}">
+        ${hasBefore ? `
+          <img class="img-before" src="${img.beforeSrc}" alt="Before: ${img.alt}" loading="lazy" />
+          <img class="img-after" src="${img.src}" alt="${img.alt}" loading="lazy" />
+          <div class="ba-pill" aria-hidden="true">
+            <span class="ba-pill-state ba-after">AFTER</span>
+            <span class="ba-pill-state ba-before">BEFORE</span>
+            <span class="ba-pill-hint">Hover for Before</span>
+          </div>
+        ` : `
+          <img class="img-after" src="${img.src}" alt="${img.alt}" loading="lazy" />
+          <div class="single-pill">${img.badge || 'Studio'}</div>
+        `}
+        <div class="gallery-overlay">
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/>
+          </svg>
+        </div>
+        <div class="gallery-caption">
+          <span class="caption-title">${img.caption}</span>
+          ${hasBefore ? '<span class="caption-sub">Hover / Tap to view Before</span>' : ''}
+        </div>
+      </button>
+    </div>
+  `;
+}).join('');
 
-/* LIGHTBOX */
-const lightbox  = document.getElementById('lightbox');
-const lbImg     = document.getElementById('lightbox-img');
-const lbCaption = document.getElementById('lb-caption');
-let currentIdx  = 0;
+/* Touch support: tap to toggle Before/After on mobile */
+document.querySelectorAll('.gallery-item.has-before').forEach(item => {
+  item.addEventListener('touchstart', e => {
+    // Only toggle if not clicking to open lightbox
+  }, { passive: true });
+});
+
+/* LIGHTBOX (With Before/After Switcher) */
+const lightbox    = document.getElementById('lightbox');
+const lbImg       = document.getElementById('lightbox-img');
+const lbCaption   = document.getElementById('lb-caption');
+const lbBaBar     = document.getElementById('lb-ba-bar');
+const lbBtnBefore = document.getElementById('lb-btn-before');
+const lbBtnAfter  = document.getElementById('lb-btn-after');
+let currentIdx    = 0;
+let lbShowingBefore = false;
+
+function updateLightboxView() {
+  const item = GALLERY_IMAGES[currentIdx];
+  if (item.beforeSrc) {
+    lbBaBar.style.display = 'inline-flex';
+    if (lbShowingBefore) {
+      lbImg.src = item.beforeSrc;
+      lbImg.alt = 'Before: ' + item.alt;
+      lbBtnBefore.classList.add('active');
+      lbBtnAfter.classList.remove('active');
+      lbCaption.innerHTML = `<strong>${item.caption}</strong> · <span style="color:#C59B63;">Showing Natural Before</span> (Tap or click image to view After)`;
+    } else {
+      lbImg.src = item.src;
+      lbImg.alt = item.alt;
+      lbBtnAfter.classList.add('active');
+      lbBtnBefore.classList.remove('active');
+      lbCaption.innerHTML = `<strong>${item.caption}</strong> · <span style="color:#C59B63;">Showing Transformation Result</span> (Tap or click image to view Before)`;
+    }
+  } else {
+    lbBaBar.style.display = 'none';
+    lbImg.src = item.src;
+    lbImg.alt = item.alt;
+    lbCaption.textContent = item.caption;
+  }
+}
 
 function showImage(idx) {
   currentIdx = ((idx % GALLERY_IMAGES.length) + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
-  lbImg.src           = GALLERY_IMAGES[currentIdx].src;
-  lbImg.alt           = GALLERY_IMAGES[currentIdx].alt;
-  lbCaption.textContent = GALLERY_IMAGES[currentIdx].caption;
+  lbShowingBefore = false;
+  updateLightboxView();
 }
 
 document.querySelectorAll('.gallery-btn').forEach(btn => {
@@ -1773,6 +2054,25 @@ document.querySelectorAll('.gallery-btn').forEach(btn => {
 document.getElementById('lb-close').addEventListener('click', () => lightbox.close());
 document.getElementById('lb-prev').addEventListener('click', () => showImage(currentIdx - 1));
 document.getElementById('lb-next').addEventListener('click', () => showImage(currentIdx + 1));
+
+/* Switcher Buttons */
+lbBtnBefore.addEventListener('click', () => {
+  lbShowingBefore = true;
+  updateLightboxView();
+});
+lbBtnAfter.addEventListener('click', () => {
+  lbShowingBefore = false;
+  updateLightboxView();
+});
+
+/* Clicking image directly toggles Before/After in lightbox */
+lbImg.addEventListener('click', () => {
+  const item = GALLERY_IMAGES[currentIdx];
+  if (item.beforeSrc) {
+    lbShowingBefore = !lbShowingBefore;
+    updateLightboxView();
+  }
+});
 
 /* Light-dismiss (fallback for browsers without closedby attribute) */
 lightbox.addEventListener('click', e => {
